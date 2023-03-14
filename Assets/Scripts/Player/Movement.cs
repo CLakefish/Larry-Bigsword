@@ -39,6 +39,13 @@ public class Movement : MonoBehaviour
     [Header("Sprite Prefabs")]
     public GameObject swordSwing;
 
+    [Header("Basic Variables")]
+    [Space(3)]
+    public bool isInvincible;
+    [Space(3)]
+    public float healthPoints;
+    public float swingDamage;
+
     [Header("Basic Movement Variables")]
     [Space(3)]
     public bool canMove = true;
@@ -68,12 +75,10 @@ public class Movement : MonoBehaviour
     [Space(3)]
     public float swingTime;
     public float swingCooldown;
-    public float swingDamage;
     bool isSwinging;
 
 
     [HideInInspector] public bool isParry;
-    [HideInInspector] public bool isInvincible;
 
     public CurrentDir facingDir;
     Vector2 input, moveDir, mousePos;
@@ -213,10 +218,11 @@ public class Movement : MonoBehaviour
     }
     #endregion
 
-
+    // Basic Parry
     #region Parry
     IEnumerator Parry()
     {
+        // Reset your velocity, make sure you can't move. The Debug.Log is just for debugging
         rb.velocity = new Vector2(0f, 0f);
 
         canParry = canDash = canMove = false;
@@ -226,7 +232,8 @@ public class Movement : MonoBehaviour
 
         Debug.Log("Parry");
 
-        canDash = canMove = isInvincible = false;
+        canDash = canMove = true;
+        isInvincible = false;
 
         yield return new WaitForSeconds(parryCooldown);
 
@@ -235,15 +242,18 @@ public class Movement : MonoBehaviour
 
     #endregion
 
-
+    // Basic sword swing
     #region Sword Move
     IEnumerator Sword(Vector2 mousePos)
     {
+        // Make the gameObject
         sword = Instantiate(swordSwing, rb.position, rb.transform.rotation);
 
+        // Get mouse rotation so it doesn't look weird on spawn
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
+        // Basic enables/disables
         canSwing = canParry = false;
         isInvincible = isSwinging = true;
 

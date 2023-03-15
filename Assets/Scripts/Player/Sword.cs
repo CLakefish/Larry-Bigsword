@@ -13,7 +13,7 @@ public class Sword : MonoBehaviour
         {
             Debug.Log(player.GetComponent<Movement>().swingDamage);
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.StartCoroutine(enemy.HitCooldown());
+            enemy.StartCoroutine(enemy.knockBack(transform.position));
         }
     }
 }

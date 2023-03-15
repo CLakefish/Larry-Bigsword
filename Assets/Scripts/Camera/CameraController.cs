@@ -33,15 +33,31 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Make sure to follow player if in the bounds, else just follow them
         if (bounds)
         {
             targetPos = bounds.transform.position;
 
+            if (bounds.followPlayer)
+            {
+                targetPos = player.transform.position;
+            }
+
+            // Camera size change 
             this.GetComponent<Camera>().orthographicSize = Mathf.Lerp(this.GetComponent<Camera>().orthographicSize, bounds.desiredSize, bounds.transitionScaleTime * Time.deltaTime);
         }
+        else
+        {
+            targetPos = player.transform.position;
+        }
 
-        newPos = Vector2.SmoothDamp(newPos, targetPos, ref velocity, bounds.transitionTime);
+        // This is the part which applys the smoothing
+        if (bounds != null)
+        {
+            newPos = Vector2.SmoothDamp(newPos, targetPos, ref velocity, bounds.transitionTime);
+        }
 
+        // Apply the changes
         Vector3 camPos = newPos;
         camPos.z = transform.position.z;
         transform.position = camPos;

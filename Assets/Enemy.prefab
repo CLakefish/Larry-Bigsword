@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8967323800501383736}
   - component: {fileID: 8967323800501383742}
   - component: {fileID: 8967323800501383737}
+  - component: {fileID: 6394829153436000582}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: enemy
@@ -163,7 +164,8 @@ MonoBehaviour:
   bigEnemyRunSpeed: 4
   canShoot: 1
   isHit: 0
-  attackInterval: 3
+  attackInterval: 6
+  attackWait: 0.3
   bulletAmount: 1
   projectileSpeed: 1000
   healthAmount: 0
@@ -173,3 +175,22 @@ MonoBehaviour:
   enemyRun: 5.75
   enemyCheck: 20
   enemyAttack: 6
+--- !u!114 &6394829153436000582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967323800501383716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2565ed3d5e531c140ae53b582fb4bf74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayer: 0
+  destroyAtZero: 1
+  currentHP: 1
+  maxHP: 4
+  deathEffect: 0
+  deathObj: {fileID: 0}
+  deathTime: 0.5

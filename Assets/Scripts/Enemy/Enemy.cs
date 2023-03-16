@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour
     public bool isHit = false;
     [Space(3)]
     public float attackInterval;
+    public float attackWait;
     public float bulletAmount;
     public float projectileSpeed;
     [Space(3)]
@@ -223,7 +224,7 @@ public class Enemy : MonoBehaviour
 
         firedObj.GetComponent<Rigidbody2D>().AddForce(fireDir * projectileSpeed, ForceMode2D.Force);
 
-        yield return new WaitForSeconds(attackInterval / 6f);
+        yield return new WaitForSeconds(attackWait);
 
         canMove = true;
         canShoot = true;

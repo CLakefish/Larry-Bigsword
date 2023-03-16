@@ -45,6 +45,7 @@ public class Movement : MonoBehaviour
     [Space(3)]
     public float healthPoints;
     public float swingDamage;
+    public float invunerabilitySeconds;
 
     [Header("Basic Movement Variables")]
     [Space(3)]
@@ -75,7 +76,7 @@ public class Movement : MonoBehaviour
     [Space(3)]
     public float swingTime;
     public float swingCooldown;
-    bool isSwinging;
+    public bool isSwinging;
 
 
     [HideInInspector] public bool isParry;

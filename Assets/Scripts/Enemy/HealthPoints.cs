@@ -98,12 +98,25 @@ public class HealthPoints : MonoBehaviour
         }
     }
 
+    //forgot the parry, make parry reflect bullets OR destroy all bullets and knockback enemies
+
     IEnumerator invincibilityFrame()
     {
-        gameObject.GetComponent<Movement>().isInvincible = true;
+        if (!gameObject.GetComponent<Movement>().canParry)
+        {
+            gameObject.GetComponent<Movement>().isInvincible = true;
 
-        yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
 
-        gameObject.GetComponent<Movement>().isInvincible = false;
+            gameObject.GetComponent<Movement>().isInvincible = false;
+        }
+        else
+        {
+            gameObject.GetComponent<Movement>().isInvincible = true;
+
+            yield return new WaitForSeconds(.25f);
+
+            gameObject.GetComponent<Movement>().isInvincible = false;
+        }
     }
 }

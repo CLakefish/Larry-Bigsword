@@ -10,6 +10,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public struct CurrentDir
 {
@@ -60,6 +61,7 @@ public class Movement : MonoBehaviour
     public float dashSpeed;
     public float dashCooldown;
     public float dashTime;
+    public bool isDashing;
 
     [Header("Parry Variables")]
     [Space(3)]
@@ -85,6 +87,12 @@ public class Movement : MonoBehaviour
     Vector2 input, moveDir, mousePos;
 
     #endregion
+
+
+    // TO:DO:
+    // - Fix clumping problem, although somewhat keep it
+    // - Swing while dashing
+    // - Impact 
 
     // Start is called before the first frame update
     void Start()
@@ -133,15 +141,21 @@ public class Movement : MonoBehaviour
 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
+
+        if (Input.GetMouseButtonDown(0) && hasSword && canSwing)
+        {
+            StartCoroutine(Sword(mousePos));
+        }
+
         // Dash function
         if (Input.GetKeyDown(dashKey) && canDash)
         {
             StartCoroutine(Dash(input.x, input.y));
         }
 
-        if (Input.GetMouseButtonDown(0) && hasSword && canSwing)
+        if (Input.GetMouseButtonDown(1) && canParry)
         {
-            StartCoroutine(Sword(mousePos));
+            StartCoroutine(Parry());
         }
     }
 
@@ -154,6 +168,9 @@ public class Movement : MonoBehaviour
 
         canMove = false;
         canDash = false;
+
+        isDashing = true;
+        isInvincible = true;
 
         // Dash in your current movement direction, if there is none, then you wont.
         if (x != 0 || y != 0)
@@ -176,6 +193,9 @@ public class Movement : MonoBehaviour
         }
 
         canMove = true;
+        isDashing = false;
+        isInvincible = false;
+
         yield return new WaitForSeconds(dashCooldown);
 
         canDash = true;
@@ -227,14 +247,12 @@ public class Movement : MonoBehaviour
         rb.velocity = new Vector2(0f, 0f);
 
         canParry = canDash = canMove = false;
-        isInvincible = true;
+        isInvincible = isParry = true;
 
         yield return new WaitForSeconds(parryTime);
 
-        Debug.Log("Parry");
-
         canDash = canMove = true;
-        isInvincible = false;
+        isInvincible = isParry = false;
 
         yield return new WaitForSeconds(parryCooldown);
 

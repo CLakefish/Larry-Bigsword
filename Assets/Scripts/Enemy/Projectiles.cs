@@ -42,9 +42,33 @@ public class Projectiles : MonoBehaviour
         {
             if (player != null)
             {
+                if (player.isInvincible && player.isDashing)
+                {
+                    player.isInvincible = false;
+                }
+
                 if (!player.isInvincible)
                 {
                     hp.TakeDamage(projectileDamage);
+                }
+
+                if (player.isParry)
+                {
+                    // Enemy knockback to prevent shooting
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("enemy"))
+                    {
+                        if (obj.GetComponent<Enemy>() != null)
+                        {
+                            obj.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                            obj.GetComponent<Enemy>().StartCoroutine(obj.GetComponent<Enemy>().knockBack((obj.transform.position) - player.transform.position));
+                        }
+                    }
+
+                    // Destroy all projectiles
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Projectile"))
+                    {
+                        Destroy(obj);
+                    }
                 }
             }
             else
@@ -85,6 +109,25 @@ public class Projectiles : MonoBehaviour
                 if (!player.isInvincible)
                 {
                     hp.TakeDamage(projectileDamage);
+                }
+
+                if (player.isParry)
+                {
+                    // Enemy knockback to prevent shooting
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("enemy"))
+                    {
+                        if (obj.GetComponent<Enemy>() != null)
+                        {
+                            obj.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                            obj.GetComponent<Enemy>().StartCoroutine(obj.GetComponent<Enemy>().knockBack((obj.transform.position) - player.transform.position));
+                        }
+                    }
+
+                    // Destroy all projectiles
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Projectile"))
+                    {
+                        Destroy(obj);
+                    }
                 }
             }
             else

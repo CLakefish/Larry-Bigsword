@@ -102,7 +102,7 @@ public class HealthPoints : MonoBehaviour
 
     IEnumerator invincibilityFrame()
     {
-        if (!gameObject.GetComponent<Movement>().canParry)
+        if (gameObject.GetComponent<Movement>().isParry)
         {
             gameObject.GetComponent<Movement>().isInvincible = true;
 

@@ -169,7 +169,7 @@ MonoBehaviour:
   bulletAmount: 1
   projectileSpeed: 1000
   healthAmount: 0
-  damagedInvonerability: 0.5
+  damagedInvunerability: 1
   knockbackForce: 150
   canCheck: 1
   enemyRun: 5.75

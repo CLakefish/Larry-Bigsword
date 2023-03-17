@@ -41,10 +41,11 @@ public class Enemy : MonoBehaviour
     public float attackInterval;
     public float attackWait;
     public float bulletAmount;
+    public float bulletSpread;
     public float projectileSpeed;
     [Space(3)]
     public float healthAmount;
-    public float damagedInvonerability;
+    public float damagedInvunerability;
     public float knockbackForce;
 
     [Header("Detection Variables")]
@@ -166,7 +167,7 @@ public class Enemy : MonoBehaviour
 
         rb.AddForce(dir.normalized * knockbackForce, ForceMode2D.Force);
 
-        yield return new WaitForSeconds(damagedInvonerability);
+        yield return new WaitForSeconds(damagedInvunerability);
 
         canMove = canShoot = canCheck = true;
         isHit = false;
@@ -186,6 +187,20 @@ public class Enemy : MonoBehaviour
             else
             {
                 rb.MovePosition((Vector2)transform.position + (enemySpeed * Time.fixedDeltaTime * dir));
+            }
+        }
+        
+        if (enemyType == EnemyType.Heavy)
+        {
+            rb.velocity = new Vector2(0f, 0f);
+
+            if (run)
+            {
+                rb.MovePosition((Vector2)transform.position + (bigEnemyRunSpeed * Time.fixedDeltaTime * dir));
+            }
+            else
+            {
+                rb.MovePosition((Vector2)transform.position + (bigEnemySpeed * Time.fixedDeltaTime * dir));
             }
         }
     }
@@ -219,7 +234,7 @@ public class Enemy : MonoBehaviour
 
         rb.velocity = new Vector2(0f, 0f);
 
-        Vector3 fireDir = ((new Vector3((player.transform.position.x + Random.Range(-1f, 1f)), (player.transform.position.y + Random.Range(-1f, 1f))) - transform.position)).normalized;
+        Vector3 fireDir = ((new Vector3((player.transform.position.x + Random.Range(-bulletSpread, bulletSpread)), (player.transform.position.y + Random.Range(-bulletSpread, bulletSpread))) - transform.position)).normalized;
         GameObject firedObj = Instantiate(projectile, transform.position, Quaternion.Euler(0,0,Mathf.Rad2Deg * Mathf.Atan2(fireDir.x, fireDir.y)));
 
         firedObj.GetComponent<Rigidbody2D>().AddForce(fireDir * projectileSpeed, ForceMode2D.Force);

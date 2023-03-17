@@ -32,7 +32,7 @@ public class Sword : MonoBehaviour
                 hp.TakeDamage(obj.swingDamage);
                 obj.isSwinging = false;
                 obj.swingCooldown = 0.3f;
-                return;
+                Destroy(gameObject);
             }
             else
             {
@@ -58,7 +58,7 @@ public class Sword : MonoBehaviour
                 hp.TakeDamage(obj.swingDamage);
                 obj.isSwinging = false;
                 obj.swingCooldown = 0.3f;
-                return;
+                Destroy(gameObject);
             }
             else
             {

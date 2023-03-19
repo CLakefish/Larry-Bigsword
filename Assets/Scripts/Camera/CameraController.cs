@@ -8,13 +8,13 @@ public class CameraController : MonoBehaviour
 
     [Header("Camera Variables")]
     public GameObject player;
+    [Space()]
     public static CameraController instance;
     public CameraBounds bounds;
+    Camera cam;
 
     [Header("https://i.kym-cdn.com/entries/icons/original/000/023/977/cover3.jpg")]
-    Vector2 targetPos;
-    Vector2 newPos;
-    Vector2 velocity;
+    Vector2 targetPos, newPos, velocity;
 
     #endregion
 
@@ -22,12 +22,8 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         targetPos = transform.position;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         instance = this;
+        cam = this.GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -44,7 +40,7 @@ public class CameraController : MonoBehaviour
             }
 
             // Camera size change 
-            this.GetComponent<Camera>().orthographicSize = Mathf.Lerp(this.GetComponent<Camera>().orthographicSize, bounds.desiredSize, bounds.transitionScaleTime * Time.deltaTime);
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, bounds.desiredSize, bounds.transitionScaleTime * Time.deltaTime);
         }
         else
         {

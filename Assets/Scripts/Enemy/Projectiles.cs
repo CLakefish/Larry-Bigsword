@@ -31,7 +31,7 @@ public class Projectiles : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         HealthPoints hp = collision.gameObject.GetComponent<HealthPoints>();
-        Movement player = collision.gameObject.GetComponent<Movement>();
+        BetterMovement player = collision.gameObject.GetComponent<BetterMovement>();
 
         if (collision.gameObject.layer == 2)
         {
@@ -42,16 +42,6 @@ public class Projectiles : MonoBehaviour
         {
             if (player != null)
             {
-                if (player.isInvincible && player.isDashing)
-                {
-                    player.isInvincible = false;
-                }
-
-                if (!player.isInvincible)
-                {
-                    hp.TakeDamage(projectileDamage);
-                }
-
                 if (player.isParry)
                 {
                     // Enemy knockback to prevent shooting
@@ -69,6 +59,17 @@ public class Projectiles : MonoBehaviour
                     {
                         Destroy(obj);
                     }
+                    return;
+                }
+
+                if (player.isInvincible && player.state == BetterMovement.States.dashing)
+                {
+                    player.isInvincible = false;
+                }
+
+                if (!player.isInvincible)
+                {
+                    hp.TakeDamage(projectileDamage);
                 }
             }
             else
@@ -106,11 +107,6 @@ public class Projectiles : MonoBehaviour
         {
             if (player != null)
             {
-                if (!player.isInvincible)
-                {
-                    hp.TakeDamage(projectileDamage);
-                }
-
                 if (player.isParry)
                 {
                     // Enemy knockback to prevent shooting
@@ -128,6 +124,17 @@ public class Projectiles : MonoBehaviour
                     {
                         Destroy(obj);
                     }
+                    return;
+                }
+
+                if (player.isInvincible && player.isDashing)
+                {
+                    player.isInvincible = false;
+                }
+
+                if (!player.isInvincible)
+                {
+                    hp.TakeDamage(projectileDamage);
                 }
             }
             else

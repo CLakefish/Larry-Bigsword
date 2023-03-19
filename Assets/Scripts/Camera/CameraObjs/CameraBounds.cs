@@ -7,9 +7,9 @@ public class CameraBounds : MonoBehaviour
     #region Variables
 
     [Header("Camera Variables")]
-    [Space(3)]
+    [Space()]
     public bool followPlayer;
-    [Space(3)]
+    [Space()]
     public float desiredSize;
     public float transitionTime;
     public float transitionScaleTime;
@@ -34,6 +34,7 @@ public class CameraBounds : MonoBehaviour
             CameraController.instance.bounds = null;
         }
     }
+
     #endregion
 
     #region Gizmos Render

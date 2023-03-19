@@ -53,6 +53,7 @@ public class Movement : MonoBehaviour
     public bool canMove = true;
     [Space(3)]
     public float moveSpeed;
+    public float impactTimeFreeze;
 
     [Header("Dash Variables")]
     [Space(3)]
@@ -133,11 +134,15 @@ public class Movement : MonoBehaviour
         }
     }
 
+    public void ResetBools(bool currentVal)
+    {
+        canMove = canParry = canSwing = canDash = currentVal;
+    }
+
     // For organization
     void Inputs()
     {
-        if (canMove)
-            input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
@@ -166,7 +171,7 @@ public class Movement : MonoBehaviour
         float dashBeginning = Time.time;
         rb.velocity = Vector2.zero;
 
-        canMove = false;
+       // canMove = false;
         canDash = false;
 
         isDashing = true;
@@ -265,16 +270,16 @@ public class Movement : MonoBehaviour
     #region Sword Move
     IEnumerator Sword(Vector2 mousePos)
     {
-        // Make the gameObject
-        sword = Instantiate(swordSwing, rb.position, rb.transform.rotation);
-
-        // Get mouse rotation so it doesn't look weird on spawn
-        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
         // Basic enables/disables
         canSwing = canParry = false;
         isInvincible = isSwinging = true;
+
+        // Make the gameObject
+        sword = Instantiate(swordSwing, rb.position, rb.transform.rotation);
+
+        // Get mouse rotation
+        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         sword.transform.rotation = rotation;
 

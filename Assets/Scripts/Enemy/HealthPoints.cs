@@ -28,7 +28,7 @@ public class HealthPoints : MonoBehaviour
     {
         if (isPlayer)
         {
-            invincibility = gameObject.GetComponent<Movement>().isInvincible;
+            invincibility = gameObject.GetComponent<BetterMovement>().isInvincible;
         }
     }
 
@@ -102,21 +102,21 @@ public class HealthPoints : MonoBehaviour
 
     IEnumerator invincibilityFrame()
     {
-        if (gameObject.GetComponent<Movement>().isParry)
+        if (gameObject.GetComponent<BetterMovement>().isParry)
         {
-            gameObject.GetComponent<Movement>().isInvincible = true;
+            gameObject.GetComponent<BetterMovement>().isInvincible = true;
 
             yield return new WaitForSeconds(2f);
 
-            gameObject.GetComponent<Movement>().isInvincible = false;
+            gameObject.GetComponent<BetterMovement>().isInvincible = false;
         }
         else
         {
-            gameObject.GetComponent<Movement>().isInvincible = true;
+            gameObject.GetComponent<BetterMovement>().isInvincible = true;
 
             yield return new WaitForSeconds(.25f);
 
-            gameObject.GetComponent<Movement>().isInvincible = false;
+            gameObject.GetComponent<BetterMovement>().isInvincible = false;
         }
     }
 }

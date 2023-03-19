@@ -15,6 +15,7 @@ public class HealthIndicator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         text = GetComponent<TMP_Text>();
     }
 

@@ -55,6 +55,7 @@ public class Enemy : MonoBehaviour
     public float enemyRun;
     public float enemyCheck;
     public float enemyAttack;
+    public float enemyClump;
     bool isCheck, isAttack, isRun;
 
 
@@ -84,6 +85,9 @@ public class Enemy : MonoBehaviour
 
         #endregion
 
+
+        #region Projectile Raycasting
+
         // Raycasting
         if (Vector3.Distance(transform.position, player.transform.position) < (enemyAttack * 1.25f))
         {
@@ -96,9 +100,15 @@ public class Enemy : MonoBehaviour
             {
                 canShoot = true;
             }
+            else
+            {
+                canShoot = false;
+            }
 
             Debug.DrawRay(transform.position, dir * (enemyAttack * 1.25f), Color.red, 1.0f);
         }
+
+        #endregion
 
         // Get basic movement
         #region Movement
@@ -165,7 +175,7 @@ public class Enemy : MonoBehaviour
 
         rb.velocity = new Vector2(0f, 0f);
 
-        rb.AddForce(dir.normalized * knockbackForce, ForceMode2D.Force);
+        rb.AddForce(dir * knockbackForce, ForceMode2D.Force);
 
         yield return new WaitForSeconds(damagedInvunerability);
 
@@ -216,7 +226,6 @@ public class Enemy : MonoBehaviour
             {
                 yield return null;
             }
-
             StartCoroutine(FireBullet());
         }
 
@@ -238,6 +247,11 @@ public class Enemy : MonoBehaviour
         GameObject firedObj = Instantiate(projectile, transform.position, Quaternion.Euler(0,0,Mathf.Rad2Deg * Mathf.Atan2(fireDir.x, fireDir.y)));
 
         firedObj.GetComponent<Rigidbody2D>().AddForce(fireDir * projectileSpeed, ForceMode2D.Force);
+
+        if (enemyType == EnemyType.Heavy)
+        {
+            rb.velocity = new Vector2(knockbackForce, knockbackForce);
+        }
 
         yield return new WaitForSeconds(attackWait);
 

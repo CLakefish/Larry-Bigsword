@@ -27,8 +27,8 @@ public class BetterMovement : MonoBehaviour
     [Space(3), Header("Parry"), Space(3)]
     [SerializeField] public float parryDuration;
     [SerializeField] public float parryCooldown;
-    internal bool isParry, isInvincible = false;
-    internal float impactTimeFreeze = 0.000001f;
+    [SerializeField] internal bool isParry, isInvincible = false;
+    internal float impactTimeFreeze = 0.00000125f;
 
 
     [Space(3), Header("https://i.kym-cdn.com/entries/icons/original/000/023/977/cover3.jpg"), Space(3)]
@@ -74,8 +74,7 @@ public class BetterMovement : MonoBehaviour
         // Inputs 
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
-        bool swordInput = Input.GetMouseButtonDown(0),
-             dashInput = Input.GetKeyDown(dashKey);
+        bool dashInput = Input.GetKeyDown(dashKey);
 
         #endregion
 
@@ -124,7 +123,11 @@ public class BetterMovement : MonoBehaviour
             case States.dashing:
 
                 rb.velocity = input * dashSpeed;
-                if (stateDur > dashDuration) ChangeState(States.running);
+
+                if (stateDur > dashDuration)
+                {
+                    ChangeState(States.running);
+                }
 
                 break;
         }

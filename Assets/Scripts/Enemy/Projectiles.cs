@@ -59,22 +59,20 @@ public class Projectiles : MonoBehaviour
                     {
                         Destroy(obj);
                     }
+
                     return;
                 }
 
                 if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
                     player.isInvincible = false;
+                    return;
                 }
 
                 if (!player.isInvincible)
                 {
                     hp.TakeDamage(projectileDamage);
                 }
-            }
-            else
-            {
-                hp.TakeDamage(projectileDamage);
             }
         }
         if (destroyOnCollide)
@@ -96,7 +94,7 @@ public class Projectiles : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         HealthPoints hp = collision.gameObject.GetComponent<HealthPoints>();
-        Movement player = collision.gameObject.GetComponent<Movement>();
+        BetterMovement player = collision.gameObject.GetComponent<BetterMovement>();
 
         if (collision.gameObject.layer == 2)
         {
@@ -124,22 +122,20 @@ public class Projectiles : MonoBehaviour
                     {
                         Destroy(obj);
                     }
+
                     return;
                 }
 
-                if (player.isInvincible && player.isDashing)
+                if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
                     player.isInvincible = false;
+                    return;
                 }
 
                 if (!player.isInvincible)
                 {
                     hp.TakeDamage(projectileDamage);
                 }
-            }
-            else
-            {
-                hp.TakeDamage(projectileDamage);
             }
         }
         if (destroyOnCollide)

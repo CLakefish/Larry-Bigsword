@@ -7,6 +7,8 @@ using static UnityEditor.PlayerSettings;
 public class Sword : MonoBehaviour
 {
     public GameObject player;
+    public GameObject particleHit;
+    internal Enemy enemy;
     GameObject recentlyAttacked;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,16 +21,19 @@ public class Sword : MonoBehaviour
             if (collision.gameObject.tag == "Projectile")
             {
                 hp.TakeDamage(1);
+
+                Instantiate(particleHit, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
+
                 Destroy(gameObject);
                 return;
             }
             if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<Enemy>().isHit)
             {
-                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                enemy = collision.gameObject.GetComponent<Enemy>();
+
+                Instantiate(particleHit, enemy.transform.position, enemy.transform.rotation);
 
                 HitManager.ImpactHit();
-
-                enemy.StartCoroutine(enemy.knockBack(transform.position));
 
                 hp.TakeDamage(1);
                 return;
@@ -49,16 +54,19 @@ public class Sword : MonoBehaviour
             if (collision.gameObject.tag == "Projectile")
             {
                 hp.TakeDamage(1);
+
+
+                Instantiate(particleHit, collision.gameObject.transform.position, enemy.transform.rotation);
                 Destroy(gameObject);
                 return;
             }
             if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<Enemy>().isHit)
             {
-                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                enemy = collision.gameObject.GetComponent<Enemy>();
+
+                Instantiate(particleHit, enemy.transform.position, collision.gameObject.transform.rotation);
 
                 HitManager.ImpactHit();
-
-                enemy.StartCoroutine(enemy.knockBack(transform.position));
 
                 hp.TakeDamage(1);
                 return;

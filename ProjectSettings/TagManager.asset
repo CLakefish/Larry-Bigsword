@@ -8,6 +8,7 @@ TagManager:
   - enemy
   - Projectile
   - Door
+  - Breakable
   layers:
   - Default
   - TransparentFX

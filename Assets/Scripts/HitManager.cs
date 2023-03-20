@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class HitManager : MonoBehaviour
 {
     private static HitManager instance;
-    GameObject player;
+    static GameObject player;
     BetterMovement playerScript;
     Camera cam;
 

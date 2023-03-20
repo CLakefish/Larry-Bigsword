@@ -17,4 +17,3 @@ public class TimedDeath : MonoBehaviour
         Destroy(gameObject, deathTime);
     }
 }
-

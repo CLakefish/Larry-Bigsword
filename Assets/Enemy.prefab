@@ -167,10 +167,12 @@ MonoBehaviour:
   attackInterval: 6
   attackWait: 0.3
   bulletAmount: 1
-  projectileSpeed: 1000
+  projectileSpeed: 60
   healthAmount: 0
   damagedInvunerability: 1
   knockbackForce: 150
+  minRandom: 0
+  maxRandom: 0
   canCheck: 1
   enemyRun: 5.75
   enemyCheck: 20

@@ -55,6 +55,7 @@ public class SwordInput : MonoBehaviour
             switch (state)
             {
                 case States.parrying:
+                    p.isInvincible = true;
                     p.isParry = true;
                     rb.velocity = new Vector2(0f, 0f);
                     break;
@@ -97,9 +98,10 @@ public class SwordInput : MonoBehaviour
 
             case States.parrying:
 
-                if (stateDur > p.parryDuration)
+                if (stateDur > p.parryDuration || (FindObjectOfType<Enemy>() && !FindObjectOfType<Enemy>().canCheck))
                 {
                     p.isParry = false;
+                    p.isInvincible = false;
                     ChangeState(States.none);
                 }
 

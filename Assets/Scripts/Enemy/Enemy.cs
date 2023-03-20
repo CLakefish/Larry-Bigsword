@@ -41,7 +41,6 @@ public class Enemy : MonoBehaviour
     public float attackInterval;
     public float attackWait;
     public float bulletAmount;
-    public float bulletSpread;
     public float projectileSpeed;
     [Space(3)]
     public float healthAmount;
@@ -55,7 +54,6 @@ public class Enemy : MonoBehaviour
     public float enemyRun;
     public float enemyCheck;
     public float enemyAttack;
-    public float enemyClump;
     bool isCheck, isAttack, isRun;
 
 
@@ -243,20 +241,79 @@ public class Enemy : MonoBehaviour
 
         rb.velocity = new Vector2(0f, 0f);
 
-        Vector3 fireDir = ((new Vector3((player.transform.position.x + Random.Range(-bulletSpread, bulletSpread)), (player.transform.position.y + Random.Range(-bulletSpread, bulletSpread))) - transform.position)).normalized;
-        GameObject firedObj = Instantiate(projectile, transform.position, Quaternion.Euler(0,0,Mathf.Rad2Deg * Mathf.Atan2(fireDir.x, fireDir.y)));
+        GameObject firedObj = Instantiate(projectile, transform.position, Quaternion.identity);
 
-        firedObj.GetComponent<Rigidbody2D>().AddForce(fireDir * projectileSpeed, ForceMode2D.Force);
-
-        if (enemyType == EnemyType.Heavy)
+        if (player.GetComponent<BetterMovement>().state == BetterMovement.States.dashing)
         {
-            rb.velocity = new Vector2(knockbackForce, knockbackForce);
+            for (int i = 0; i < bulletAmount; i++)
+            {
+                firedObj.GetComponent<Rigidbody2D>().velocity = dir * projectileSpeed;
+            }
+        }
+        else
+        {
+            if (interceptDir(player.transform.position, transform.position, player.GetComponent<Rigidbody2D>().velocity, projectileSpeed, out var dir))
+            {
+                for (int i = 0; i < bulletAmount; i++)
+                {
+                    firedObj.GetComponent<Rigidbody2D>().velocity = dir * projectileSpeed;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < bulletAmount; i++)
+                {
+                    firedObj.GetComponent<Rigidbody2D>().velocity = (player.transform.position - this.transform.position).normalized * projectileSpeed;
+                }
+            }
         }
 
         yield return new WaitForSeconds(attackWait);
 
         canMove = true;
         canShoot = true;
+    }
+
+    public bool interceptDir(Vector2 playerObj, Vector2 enemyObj, Vector2 playerVel, float projectileSpeed, out Vector2 dir)
+    {
+        static int SolveQuadratic(float a, float b, float c, out float r1, out float r2)
+        {
+            float d = b * b - 4 * a * c;
+
+            if (d < 0)
+            {
+                r1 = Mathf.Infinity;
+                r2 = -r1;
+                return 0;
+            }
+
+            r1 = (-b + Mathf.Sqrt(d)) / (2 * a);
+            r2 = (-b - Mathf.Sqrt(d)) / (2 * a);
+
+            return d > 0 ? 2 : 1;
+        }
+
+        // Get the direction from enemyObj to playerObj
+        Vector2 dist = enemyObj - playerObj;
+        float distMag = dist.magnitude;
+
+        var alpha = Vector2.Angle(dist, playerVel) * Mathf.Deg2Rad;
+        var sA = playerVel.magnitude;
+        var r = sA / projectileSpeed;
+
+        if (SolveQuadratic(1 - r * r, 2 * r * distMag * Mathf.Cos(alpha), -(distMag * distMag), out var r1, out var r2) == 0)
+        {
+            dir = Vector2.zero;
+            return false;
+        }
+
+        var dA = Mathf.Max(r1, r2);
+        var t = dA / projectileSpeed;
+        var c = playerObj + playerVel * t;
+
+        dir = (c - enemyObj).normalized;
+
+        return true;
     }
 
     #endregion

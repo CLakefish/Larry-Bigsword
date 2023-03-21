@@ -8,7 +8,7 @@ public class Sword : MonoBehaviour
 {
     public GameObject player;
     public GameObject particleHit;
-    internal Enemy enemy;
+    internal BetterEnemy enemy;
     GameObject recentlyAttacked;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -27,9 +27,9 @@ public class Sword : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
-            if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<Enemy>().isHit)
+            if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<BetterEnemy>().isHit)
             {
-                enemy = collision.gameObject.GetComponent<Enemy>();
+                enemy = collision.gameObject.GetComponent<BetterEnemy>();
 
                 Instantiate(particleHit, enemy.transform.position, enemy.transform.rotation);
 
@@ -60,9 +60,9 @@ public class Sword : MonoBehaviour
                 Destroy(gameObject);
                 return;
             }
-            if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<Enemy>().isHit)
+            if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<BetterEnemy>().isHit)
             {
-                enemy = collision.gameObject.GetComponent<Enemy>();
+                enemy = collision.gameObject.GetComponent<BetterEnemy>();
 
                 Instantiate(particleHit, enemy.transform.position, collision.gameObject.transform.rotation);
 

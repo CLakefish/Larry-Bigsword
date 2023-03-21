@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8967323800501383738}
   - component: {fileID: 8967323800501383736}
   - component: {fileID: 8967323800501383742}
-  - component: {fileID: 8967323800501383737}
   - component: {fileID: 6394829153436000582}
   m_Layer: 7
   m_Name: Enemy
@@ -135,48 +134,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &8967323800501383737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8967323800501383716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64276e45bc60c044abfa7297fb4c61b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  player: {fileID: 0}
-  rb: {fileID: 8967323800501383742}
-  projectile: {fileID: 5646371705068719543, guid: 44f62d65e696a2646ae7c0d837fa7331, type: 3}
-  canMove: 1
-  enemySpeed: 8
-  enemyRunSpeed: 7
-  bigEnemySpeed: 5
-  bigEnemyRunSpeed: 4
-  canShoot: 1
-  isHit: 0
-  attackInterval: 6
-  attackWait: 0.3
-  bulletAmount: 1
-  projectileSpeed: 60
-  healthAmount: 0
-  damagedInvunerability: 1
-  knockbackForce: 150
-  minRandom: 0
-  maxRandom: 0
-  canCheck: 1
-  enemyRun: 5.75
-  enemyCheck: 20
-  enemyAttack: 6
 --- !u!114 &6394829153436000582
 MonoBehaviour:
   m_ObjectHideFlags: 0

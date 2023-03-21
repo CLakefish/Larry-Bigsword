@@ -157,7 +157,7 @@ public class BetterEnemy : MonoBehaviour
 
                 dir = new Vector2(0, 0);
 
-                if (isRun) ChangeState(States.running);
+                if (isRun && type != EnemyType.Shotgunner) ChangeState(States.running);
                 break;
 
             // When running
@@ -212,33 +212,14 @@ public class BetterEnemy : MonoBehaviour
     {
         Vector2 projectileDir;
 
-        if (player.GetComponent<BetterMovement>().state != BetterMovement.States.dashing)
+        for (int i = 0; i < projectileCount; i++)
         {
-            for (int i = 0; i < projectileCount; i++)
-            {
-                GameObject firedObj = Instantiate(projectile, transform.position, Quaternion.identity);
+            GameObject firedObj = Instantiate(projectile, transform.position, Quaternion.identity);
 
-                if (interceptDir(player.transform.position, transform.position, player.GetComponent<Rigidbody2D>().velocity, projectileSpeed, out projectileDir))
-                {
-                    firedObj.GetComponent<Rigidbody2D>().velocity = (projectileDir + rb.velocity) * projectileSpeed;
-                    projectileAmmoCountTemp--;
-                }
-                else
-                {
-                    firedObj.GetComponent<Rigidbody2D>().velocity = (player.transform.position - transform.position).normalized * projectileSpeed;
-                    projectileAmmoCountTemp--;
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < projectileCount; i++)
-            {
-                GameObject firedObj = Instantiate(projectile, transform.position, Quaternion.identity);
+            if (interceptDir(player.transform.position, transform.position, player.GetComponent<Rigidbody2D>().velocity, projectileSpeed, out projectileDir)) firedObj.GetComponent<Rigidbody2D>().velocity = (projectileDir + rb.velocity).normalized * projectileSpeed;
+            else firedObj.GetComponent<Rigidbody2D>().velocity = (player.transform.position - transform.position).normalized * projectileSpeed;
 
-                firedObj.GetComponent<Rigidbody2D>().velocity = (player.transform.position - transform.position).normalized * projectileSpeed;
-                projectileAmmoCountTemp--;
-            }
+            projectileAmmoCountTemp--;
         }
 
         stateDur = 0f;
@@ -276,7 +257,7 @@ public class BetterEnemy : MonoBehaviour
         // Ensure that if you character is stopped it won't fire it incorrectly
         if (SolveQuadratic(1 - r * r, 2 * r * distMag * Mathf.Cos(alpha), -(distMag * distMag), out var r1, out var r2) == 0)
         {
-            dir = Vector2.zero;
+            dir = Vector2.zero * Random.Range(projectileMinRandom, projectileMaxRandom);
             return false;
         }
 

@@ -6,7 +6,7 @@ public class SwordInput : MonoBehaviour
 {
     private Camera cam;
     Vector2 mousePos;
-    GameObject sword;
+    internal GameObject sword;
     BetterMovement p;
     Rigidbody2D rb;
 

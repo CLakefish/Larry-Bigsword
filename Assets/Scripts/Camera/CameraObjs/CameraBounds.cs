@@ -6,6 +6,13 @@ public class CameraBounds : MonoBehaviour
 {
     #region Variables
 
+    [System.Serializable]
+    public class EnemyData
+    {
+        public GameObject enemy;
+        public int chanceIncrease = 1;
+    }
+
     [Header("Camera Variables")]
     [Space()]
     public bool followPlayer;
@@ -14,7 +21,36 @@ public class CameraBounds : MonoBehaviour
     public float transitionTime;
     public float transitionScaleTime;
 
+    [Header("Spawn Enemies")]
+    [Space()]
+    public bool spawnEnemies;
+    [Space()]
+    public GameObject enemyIndicator;
+    public List<EnemyData> enemies;
+    [HideInInspector]
+    public List<GameObject> enemyPrefabs;
+    [Space()]
+    public float enemyCount, distance;
+    float enemyCountTemp;
+    List<GameObject> enemyList = new();
+
     #endregion
+
+    private void Start()
+    {
+        if (spawnEnemies)
+        {
+            enemyCountTemp = enemyCount;
+
+            foreach (EnemyData currentData in enemies)
+            {
+                for (int i = 0; i < currentData.chanceIncrease; i++)
+                {
+                    enemyPrefabs.Add(currentData.enemy);
+                }
+            }
+        }
+    }
 
     #region Collisions
 
@@ -25,6 +61,8 @@ public class CameraBounds : MonoBehaviour
         {
             CameraController.instance.bounds = this;
         }
+
+        if (spawnEnemies) StartCoroutine(SpawnEnemies());
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -36,6 +74,42 @@ public class CameraBounds : MonoBehaviour
     }
 
     #endregion
+
+    IEnumerator SpawnEnemies()
+    {
+        yield return new WaitForSeconds(1f);
+
+        List<GameObject> indicators = new List<GameObject>();
+
+        if (enemyCountTemp > 0)
+        {
+            GameObject clone = Instantiate(enemyIndicator, (Vector2)transform.position + Random.insideUnitCircle * distance, Quaternion.identity);
+            indicators.Add(clone);
+            enemyCountTemp--;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        foreach (GameObject obj in indicators)
+        {
+            GameObject prefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+            GameObject clone = Instantiate(prefab, obj.transform.position, Quaternion.identity);
+
+            Destroy(obj);
+
+            enemyList.Add(clone);
+        }
+
+        GameObject[] enemyListCopy = enemyList.ToArray();
+
+        foreach (GameObject currentEnemy in enemyListCopy)
+        {
+            if (currentEnemy == null || (currentEnemy.TryGetComponent(out HealthPoints h) && h.currentHP <= 0))
+            {
+                enemyList.Remove(currentEnemy);
+            }
+        }
+    }
 
     #region Gizmos Render
     private void OnDrawGizmos()

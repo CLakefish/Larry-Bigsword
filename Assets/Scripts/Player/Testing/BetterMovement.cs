@@ -12,6 +12,7 @@ public class BetterMovement : MonoBehaviour
     [Space(3), Header("Bools"), Space(3)]
     [SerializeField] internal bool canMove = true;
     [SerializeField] internal bool hasSword = true;
+    internal bool canDash = true;
 
     [Space(3), Header("Movement"), Space(3)]
     [SerializeField] private float moveSpeed = 12f;
@@ -87,7 +88,7 @@ public class BetterMovement : MonoBehaviour
 
         if (canMove) rb.velocity = input * moveSpeed;
 
-        #region Statemachine (ty Oliver)
+        #region Statemachine
 
         // On state enter
         if (stateDur == 0)
@@ -115,7 +116,7 @@ public class BetterMovement : MonoBehaviour
             case States.running:
 
                 // Dash w/Cooldown
-                if (dashInput && dashCooldownComplete) ChangeState(States.dashing);
+                if (dashInput && dashCooldownComplete && canDash) ChangeState(States.dashing);
 
                 break;
 

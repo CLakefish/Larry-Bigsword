@@ -216,6 +216,8 @@ public class BetterEnemy : MonoBehaviour
         {
             GameObject firedObj = Instantiate(projectile, transform.position, Quaternion.identity);
 
+            firedObj.GetComponent<Projectiles>().projectileDamage = projectileDamage;
+
             if (interceptDir(player.transform.position, transform.position, player.GetComponent<Rigidbody2D>().velocity, projectileSpeed, out projectileDir)) firedObj.GetComponent<Rigidbody2D>().velocity = (projectileDir + rb.velocity).normalized * projectileSpeed;
             else firedObj.GetComponent<Rigidbody2D>().velocity = (player.transform.position - transform.position).normalized * projectileSpeed;
 

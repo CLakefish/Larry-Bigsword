@@ -44,6 +44,7 @@ public class Projectiles : MonoBehaviour
             {
                 if (player.isParry)
                 {
+                    HitManager.ImpactHit();
                     // Enemy knockback to prevent shooting
                     foreach (GameObject obj in GameObject.FindGameObjectsWithTag("enemy"))
                     {
@@ -65,12 +66,14 @@ public class Projectiles : MonoBehaviour
 
                 if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
+                    HitManager.ImpactHit();
                     player.isInvincible = false;
                     return;
                 }
 
                 if (!player.isInvincible)
                 {
+                    HitManager.ImpactHit();
                     hp.TakeDamage(projectileDamage);
                 }
             }

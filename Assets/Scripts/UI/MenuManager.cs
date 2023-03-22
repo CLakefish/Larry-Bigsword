@@ -23,12 +23,6 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player == null)
-        {
-            player = FindObjectOfType<BetterMovement>();
-            return;
-        }
-
         if (player.gameObject.GetComponent<HealthPoints>().currentHP == 0) StartCoroutine(deathMenu());
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -41,7 +35,7 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator deathMenu()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         DeathScreen.SetActive(true);
         PauseMenu.SetActive(false);
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BetterEnemy : MonoBehaviour
@@ -39,6 +40,7 @@ public class BetterEnemy : MonoBehaviour
     [Space(3), Header("Movement"), Space(3)]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float runSpeed, reloadRunSpeed;
+    internal bool runAway;
 
     [Space(3), Header("Projectile Variables"), Space(3)]
     [Space(3), SerializeField] private GameObject projectile;
@@ -126,6 +128,8 @@ public class BetterEnemy : MonoBehaviour
             // When not doing anything else
             case States.none:
 
+                if (runAway) ChangeState(States.running);
+
                 if (projectileAmmoCountTemp <= 0) ChangeState(States.reloading);
                 if (isCheck) ChangeState(States.checking);
 
@@ -133,6 +137,8 @@ public class BetterEnemy : MonoBehaviour
 
             // When in view
             case States.checking:
+
+                if (runAway) ChangeState(States.running);
 
                 if (!isCheck) ChangeState(States.none);
                 if (projectileAmmoCountTemp <= 0) ChangeState(States.reloading);
@@ -143,6 +149,8 @@ public class BetterEnemy : MonoBehaviour
 
             // When attacking
             case States.attacking:
+
+                if (runAway) ChangeState(States.running);
 
                 if (!isAttack) ChangeState(States.checking);
 
@@ -163,7 +171,7 @@ public class BetterEnemy : MonoBehaviour
             // When running
             case States.running:
 
-                if (!isRun) ChangeState(States.checking);
+                if (!runAway) ChangeState(States.checking);
 
                 dir = (player.transform.position - rb.transform.position).normalized;
                 break;
@@ -273,4 +281,9 @@ public class BetterEnemy : MonoBehaviour
     }
 
     #endregion
+
+    public void knockBack()
+    {
+        runAway = true;
+    }
 }

@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] public GameObject PauseMenu;
     [SerializeField] public GameObject speedrunTime;
 
+
     private BetterMovement player;
 
     // Start is called before the first frame update
@@ -69,12 +70,14 @@ public class MenuManager : MonoBehaviour
     public void BackToMenu()
     {
         Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
         return;
     }
 
     public void Exit()
     {
         Time.timeScale = 1f;
+        Application.Quit();
         return;
     }
 }

@@ -12,7 +12,7 @@ public class DoorHandler : MonoBehaviour
     private GameObject player;
     internal CameraController cs;
 
-    int instance = 0;
+    public int instance = 0;
 
     private void Awake()
     {
@@ -33,10 +33,11 @@ public class DoorHandler : MonoBehaviour
                 if (obj.activeSelf)
                 {
                     obj.SetActive(false);
+                    gameObject.GetComponent<AudioSource>().Play();
                 }
             }
 
-            if (instance == 1)
+            if (instance == 2)
             {
                 SpawnObj();
                 instance--;
@@ -49,6 +50,7 @@ public class DoorHandler : MonoBehaviour
                 if (!obj.activeSelf)
                 {
                     obj.SetActive(true);
+                    gameObject.GetComponent<AudioSource>().Play();
                     instance++;
                 }
             }
@@ -59,16 +61,18 @@ public class DoorHandler : MonoBehaviour
     {
         if (player.GetComponent<HealthPoints>().currentHP == 1)
         {
-            GameObject obj = Instantiate(healthObj, cs.bounds.transform.position, Quaternion.identity);
+            GameObject obj = Instantiate(healthObj, player.transform.position - (Vector3.left * 3), Quaternion.identity);
         }
         else
         {
-            GameObject obj;
             int i;
 
             i = (int)Random.Range(0, 1);
 
-            if (i == 0) obj = Instantiate(healthObj, cs.bounds.transform.position, Quaternion.identity);
+            if (i == 0)
+            {
+                GameObject obj = Instantiate(healthObj, player.transform.position - (Vector3.left * 3), Quaternion.identity);
+            }
         }
     }
 }

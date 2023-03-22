@@ -51,7 +51,7 @@ public class Projectiles : MonoBehaviour
                         if (obj.GetComponent<Enemy>() != null)
                         {
                             obj.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                            obj.GetComponent<Enemy>().StartCoroutine(obj.GetComponent<Enemy>().knockBack((obj.transform.position) - player.transform.position));
+                            obj.GetComponent<BetterEnemy>().knockBack();
                         }
                     }
 
@@ -116,7 +116,7 @@ public class Projectiles : MonoBehaviour
                         if (obj.GetComponent<Enemy>() != null)
                         {
                             obj.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                            obj.GetComponent<Enemy>().StartCoroutine(obj.GetComponent<Enemy>().knockBack((obj.transform.position) - player.transform.position));
+                            obj.GetComponent<BetterEnemy>().knockBack();
                         }
                     }
 

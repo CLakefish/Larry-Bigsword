@@ -37,7 +37,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8967323800501383716, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
       propertyPath: m_Name
-      value: BasicEnemy
+      value: BasicEnemy Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8967323800501383739, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
       propertyPath: m_RootOrder

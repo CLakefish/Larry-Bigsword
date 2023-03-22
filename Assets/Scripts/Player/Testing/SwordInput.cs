@@ -102,7 +102,7 @@ public class SwordInput : MonoBehaviour
                 {
                     p.isParry = false;
                     p.isInvincible = false;
-                    ChangeState(States.none);
+                    ChangeState(States.swinging);
                 }
 
                 break;

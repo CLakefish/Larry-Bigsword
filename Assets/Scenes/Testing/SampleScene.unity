@@ -621,7 +621,7 @@ MonoBehaviour:
   desiredSize: 12
   transitionTime: 0.2
   transitionScaleTime: 5
-  spawnEnemies: 0
+  spawnEnemies: 1
   enemyIndicator: {fileID: 7156843281539029207, guid: 1674f73fd0440124591f45e485a4fe65, type: 3}
   enemies:
   - enemy: {fileID: 8967323800501383716, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
@@ -4934,6 +4934,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1679691338}
+    - target: {fileID: 3837704004246399887, guid: c7e4f3fd6018b054e97e88bcac9c5d56, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3837704004383476872, guid: c7e4f3fd6018b054e97e88bcac9c5d56, type: 3}
       propertyPath: m_Name
       value: MenuManager

@@ -138,8 +138,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 215.37, y: -200.59138}
-  m_SizeDelta: {x: -430.73, y: -401.1828}
+  m_AnchoredPosition: {x: 316.87622, y: -269.02942}
+  m_SizeDelta: {x: -633.7424, y: -538.059}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3837704002600003032
 CanvasRenderer:
@@ -1608,8 +1608,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 1
   player: {fileID: 0}
-  HeatlhDisplay: {fileID: 0}
-  DeathScreen: {fileID: 0}
 --- !u!1 &3837704003561622961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2591,8 +2589,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -248.73332, y: -200.59138}
-  m_SizeDelta: {x: -497.4666, y: -401.1828}
+  m_AnchoredPosition: {x: -343.5825, y: -269.03}
+  m_SizeDelta: {x: -687.165, y: -538.06}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3837704004100728605
 CanvasRenderer:
@@ -2650,7 +2648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3837704004246399883
 RectTransform:
   m_ObjectHideFlags: 0

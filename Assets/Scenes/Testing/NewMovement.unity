@@ -400,43 +400,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &524406868 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8967323800501383716, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
-  m_PrefabInstance: {fileID: 575395711}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &524406869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 524406868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1407897ca51100c4aacd4ee7e520d376, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  checkRad: 20
-  attackRad: 5.75
-  runRad: 5
-  moveSpeed: 10
-  runSpeed: 8
-  reloadRunSpeed: 2.97
-  projectile: {fileID: 5646371705068719543, guid: 44f62d65e696a2646ae7c0d837fa7331, type: 3}
-  projectileSpeed: 10
-  projectileStartTime: 0.05
-  projectileCount: 3
-  projectileAmmoCount: 31
-  projectileReloadTime: 5
-  projectileInterval: 1.26
-  projectileMinRandom: 1
-  projectileMaxRandom: 1.55
-  projectileDamage: 1
 --- !u!1001 &575395711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -504,7 +467,8 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 15
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
 --- !u!1 &1328531882
 GameObject:
@@ -632,6 +596,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2028042985 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8967323800501383716, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
+  m_PrefabInstance: {fileID: 575395711}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2028042991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028042985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377659b76238f0246b086ad299071ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentStateM: 0
+  currentStateA: 0
+  previousStateM: 0
+  previousStateA: 0
+  type: 0
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  checkRad: 20
+  attackRad: 5
+  runRad: 4
+  moveSpeed: 10
+  runSpeed: 12
+  reloadRunSpeed: 0
+  parriedStunTime: 0
+  projectile: {fileID: 0}
+  projectileSpeed: 0
+  projectileStartTime: 0
+  projectileCount: 0
+  projectileAmmoCount: 0
+  projectileReloadTime: 0
+  projectileInterval: 0
+  projectileMinRandom: 0
+  projectileMaxRandom: 0
+  projectileDamage: 0
 --- !u!1 &2144405985
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,6 +40,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7051603110268722518, guid: 7875c54e213d259489af377e397db7cc, type: 3}
+      propertyPath: parriedStunTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051603110268722518, guid: 7875c54e213d259489af377e397db7cc, type: 3}
       propertyPath: projectileCount
       value: 1
       objectReference: {fileID: 0}

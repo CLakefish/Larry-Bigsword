@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WinObject : MonoBehaviour
+public class SwordObj : MonoBehaviour
 {
-    public GameObject menu;
     GameObject player;
 
     // Start is called before the first frame update
@@ -17,7 +16,8 @@ public class WinObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            menu.SetActive(true);
+            player.GetComponent<BetterMovement>().hasSword = true;
+            Destroy(gameObject);
         }
     }
 }

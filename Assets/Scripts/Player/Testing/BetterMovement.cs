@@ -29,7 +29,7 @@ public class BetterMovement : MonoBehaviour
     [SerializeField] public float parryDuration;
     [SerializeField] public float parryCooldown;
     [SerializeField] internal bool isParry, isInvincible = false;
-    internal float impactTimeFreeze = 0.00000125f;
+    internal float impactTimeFreeze = 0.0000015f;
 
 
     [Space(3), Header("https://i.kym-cdn.com/entries/icons/original/000/023/977/cover3.jpg"), Space(3)]

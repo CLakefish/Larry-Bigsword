@@ -10,6 +10,11 @@ public class Sword : MonoBehaviour
     internal BetterEnemy enemy;
     GameObject recentlyAttacked;
 
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         HealthPoints hp = collision.gameObject.GetComponent<HealthPoints>();
@@ -22,12 +27,8 @@ public class Sword : MonoBehaviour
             {
                 hp.TakeDamage(1);
 
-                camera.shakeDuration = .07f;
-                camera.shakeMagnitude = .15f;
-
                 Instantiate(particleHit, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
 
-                Destroy(gameObject);
                 return;
             }
             if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<BetterEnemy>().isHit)
@@ -62,11 +63,8 @@ public class Sword : MonoBehaviour
             {
                 hp.TakeDamage(1);
 
-                camera.shakeDuration = .07f;
-                camera.shakeMagnitude = .15f;
+                Instantiate(particleHit, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
 
-                Instantiate(particleHit, collision.gameObject.transform.position, enemy.transform.rotation);
-                Destroy(gameObject);
                 return;
             }
             if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<BetterEnemy>().isHit)
@@ -76,7 +74,7 @@ public class Sword : MonoBehaviour
                 camera.shakeDuration = .07f;
                 camera.shakeMagnitude = .07f;
 
-                Instantiate(particleHit, enemy.transform.position, collision.gameObject.transform.rotation);
+                Instantiate(particleHit, enemy.transform.position, enemy.transform.rotation);
 
                 HitManager.ImpactHit();
 
@@ -84,8 +82,8 @@ public class Sword : MonoBehaviour
                 return;
             }
 
-        }
 
-        recentlyAttacked = collision.gameObject;
+            recentlyAttacked = collision.gameObject;
+        }
     }
 }

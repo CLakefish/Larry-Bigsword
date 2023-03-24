@@ -45,6 +45,12 @@ public class Projectiles : MonoBehaviour
             {
                 if (player.isParry)
                 {
+
+                    if (player.GetComponent<SwordInput>().parryVFX != null)
+                    {
+                        Destroy(player.GetComponent<SwordInput>().parryVFX);
+                    }
+
                     camera.shakeDuration = .1f;
                     camera.shakeMagnitude = .1f;
 
@@ -71,9 +77,6 @@ public class Projectiles : MonoBehaviour
 
                 if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
-                    camera.shakeDuration = .1f;
-                    camera.shakeMagnitude = .1f;
-
                     HitManager.ImpactHit();
 
                     player.isInvincible = false;
@@ -88,6 +91,10 @@ public class Projectiles : MonoBehaviour
                     HitManager.ImpactHit();
 
                     hp.TakeDamage(projectileDamage);
+
+                    StartCoroutine(IFrame());
+
+                    player.knockBack(gameObject);
                 }
             }
         }
@@ -122,6 +129,8 @@ public class Projectiles : MonoBehaviour
         {
             if (player != null)
             {
+                if (player.isInvincible && player.state != BetterMovement.States.dashing) return;
+
                 if (player.isParry)
                 {
                     camera.shakeDuration = .1f;
@@ -150,8 +159,6 @@ public class Projectiles : MonoBehaviour
 
                 if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
-                    camera.shakeDuration = .1f;
-                    camera.shakeMagnitude = .1f;
                     HitManager.ImpactHit();
                     player.isInvincible = false;
                     return;
@@ -163,6 +170,10 @@ public class Projectiles : MonoBehaviour
                     camera.shakeMagnitude = .1f;
                     HitManager.ImpactHit();
                     hp.TakeDamage(projectileDamage);
+
+                    StartCoroutine(IFrame());
+
+                    player.knockBack(gameObject);
                 }
             }
         }
@@ -180,5 +191,16 @@ public class Projectiles : MonoBehaviour
 
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator IFrame()
+    {
+        BetterMovement player = GameObject.FindGameObjectWithTag("Player").GetComponent<BetterMovement>();
+
+        player.isInvincible = true;
+
+        yield return new WaitForSeconds(2f);
+
+        player.isInvincible = false;
     }
 }

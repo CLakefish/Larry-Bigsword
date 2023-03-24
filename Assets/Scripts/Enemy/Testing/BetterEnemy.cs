@@ -130,7 +130,11 @@ public class BetterEnemy : MonoBehaviour
             case States.none:
 
                 if (projectileAmmoCountTemp <= 0) ChangeState(States.reloading);
-                if (isCheck) ChangeState(States.checking);
+
+                if (stateDur > .7f)
+                {
+                    if (isCheck) ChangeState(States.checking);
+                }
 
                 break;
 

@@ -28,8 +28,10 @@ public class BetterMovement : MonoBehaviour
     [Space(3), Header("Parry"), Space(3)]
     [SerializeField] public float parryDuration;
     [SerializeField] public float parryCooldown;
-    [SerializeField] internal bool isParry, isInvincible = false;
-    internal float impactTimeFreeze = 0.0000015f;
+    [SerializeField] public bool isParry, isInvincible = false;
+    internal float impactTimeFreeze = 0.0000009f;
+    float knockbackForce = 800f;
+    internal int hitCount;
 
 
     [Space(3), Header("https://i.kym-cdn.com/entries/icons/original/000/023/977/cover3.jpg"), Space(3)]
@@ -45,7 +47,8 @@ public class BetterMovement : MonoBehaviour
     internal enum States
     {
         running,
-        dashing
+        dashing,
+        none
     }
 
     internal States state, prevState;
@@ -95,6 +98,11 @@ public class BetterMovement : MonoBehaviour
         {
             switch (state)
             {
+                case States.none:
+                    canMove = canDash = false;
+                    rb.velocity = new Vector2(0f, 0f);
+                    break;
+
                 case States.running:
                     isInvincible = false;
                     rb.velocity = new Vector2(0f, 0f);
@@ -110,7 +118,17 @@ public class BetterMovement : MonoBehaviour
         stateDur += Time.deltaTime;
 
         // State checks & continuals
-        switch (state) { 
+        switch (state) {
+
+            case States.none:
+
+                if (stateDur > 0.1f)
+                {
+                    canMove = canDash = true;
+                    ChangeState(States.running);
+                }
+
+                break;
 
             // Run Case
             case States.running:
@@ -133,5 +151,20 @@ public class BetterMovement : MonoBehaviour
                 break;
         }
         #endregion
+    }
+
+    public void knockBack(GameObject objPos)
+    {
+        prevState = state;
+        state = States.none;
+        stateDur = 0f;
+
+        Vector2 dir = (objPos.transform.position - rb.transform.position).normalized;
+
+        Vector2 knockback = dir * -1 * knockbackForce;
+
+        rb.velocity = new Vector2(0f, 0f);
+
+        rb.AddForce(knockback, ForceMode2D.Force);
     }
 }

@@ -95,8 +95,6 @@ public class CameraBounds : MonoBehaviour
             GameObject prefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
             GameObject clone = Instantiate(prefab, obj.transform.position, Quaternion.identity);
 
-            Destroy(obj);
-
             enemyList.Add(clone);
         }
 

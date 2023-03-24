@@ -7,6 +7,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3278144785266799865, guid: 7875c54e213d259489af377e397db7cc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3278144785266799865, guid: 7875c54e213d259489af377e397db7cc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475964212922663714, guid: 7875c54e213d259489af377e397db7cc, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475964212922663714, guid: 7875c54e213d259489af377e397db7cc, type: 3}
+      propertyPath: m_Color.g
+      value: 0.908556
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475964212922663714, guid: 7875c54e213d259489af377e397db7cc, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6237615370797118251, guid: 7875c54e213d259489af377e397db7cc, type: 3}
       propertyPath: currentHP
       value: 1

@@ -153,7 +153,7 @@ MonoBehaviour:
   hasSword: 0
   moveSpeed: 12
   swordObj: {fileID: 5196036763223211921, guid: f2ab03cc57ff369419b90141a2ca02fd, type: 3}
-  swingDuration: 0.25
+  swingDuration: 1.5
   swingCooldown: 0.1
   dashSpeed: 30
   dashDuration: 0.15
@@ -174,6 +174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69426b8ea0647474abfd6d40b54614fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parryVisual: {fileID: 6732239823645204600, guid: aac005861e3d3a342855128338e35eb0, type: 3}
+  state: 2
+  prevState: 2
 --- !u!114 &6164685039624620864
 MonoBehaviour:
   m_ObjectHideFlags: 0

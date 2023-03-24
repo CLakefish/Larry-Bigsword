@@ -6,6 +6,8 @@ public class SwordInput : MonoBehaviour
 {
     private Camera cam;
     Vector2 mousePos;
+    public GameObject parryVisual;
+    internal GameObject parryVFX;
     internal GameObject sword;
     BetterMovement p;
     Rigidbody2D rb;
@@ -19,7 +21,7 @@ public class SwordInput : MonoBehaviour
         none
     }
 
-    private States state, prevState;
+    [SerializeField] private States state, prevState;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +57,7 @@ public class SwordInput : MonoBehaviour
             switch (state)
             {
                 case States.parrying:
+                    parryVFX = Instantiate(parryVisual, rb.position, Quaternion.identity);
                     p.isInvincible = true;
                     p.isParry = true;
                     rb.velocity = new Vector2(0f, 0f);
@@ -98,11 +101,14 @@ public class SwordInput : MonoBehaviour
 
             case States.parrying:
 
+                if(parryVFX != null) parryVFX.transform.position = rb.transform.position;
+
                 if (stateDur > p.parryDuration || (FindObjectOfType<Enemy>() && !FindObjectOfType<Enemy>().canCheck))
                 {
+                    Destroy(parryVFX);
                     p.isParry = false;
                     p.isInvincible = false;
-                    ChangeState(States.swinging);
+                    ChangeState(States.none);
                 }
 
                 break;

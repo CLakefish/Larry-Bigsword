@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
+      propertyPath: knockbackForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
       propertyPath: reloadRunSpeed
       value: 2
       objectReference: {fileID: 0}
@@ -83,5 +87,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8967323800501383742, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: bbf7e7928b4d1f74f999293a1178d2c8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}

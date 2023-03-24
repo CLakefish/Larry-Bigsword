@@ -100,6 +100,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1699609906455905896, guid: 13b9d49e3f092c7488384f3d56255a16, type: 3}
+      propertyPath: knockbackForce
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699609906455905896, guid: 13b9d49e3f092c7488384f3d56255a16, type: 3}
       propertyPath: reloadRunSpeed
       value: 1.5
       objectReference: {fileID: 0}

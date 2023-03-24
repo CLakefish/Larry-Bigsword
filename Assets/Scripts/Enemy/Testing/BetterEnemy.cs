@@ -41,7 +41,7 @@ public class BetterEnemy : MonoBehaviour
     [Space(3), Header("Movement"), Space(3)]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float runSpeed, reloadRunSpeed;
-    [SerializeField] private float parriedStunTime;
+    public float knockbackForce;
 
     [Space(3), Header("Projectile Variables"), Space(3)]
     [Space(3), SerializeField] private GameObject projectile;
@@ -62,7 +62,7 @@ public class BetterEnemy : MonoBehaviour
     Vector2 dir;
 
     internal States state, prevState;
-    float stateDur = 0f;
+    public float stateDur = 0f;
 
     #endregion
 
@@ -137,9 +137,17 @@ public class BetterEnemy : MonoBehaviour
             // When in view
             case States.checking:
 
+                // Go to different states based off collisions
                 if (!isCheck) ChangeState(States.none);
-                if (projectileAmmoCountTemp <= 0) ChangeState(States.reloading);
                 if (isAttack) ChangeState(States.attacking);
+
+                if (projectileAmmoCountTemp <= 0) ChangeState(States.reloading);
+
+                if (stateDur > 1.5f && projectileAmmoCountTemp > 0)
+                {
+                    shootProjectile();
+                    stateDur = 0f;
+                }
 
                 dir = (player.transform.position - rb.transform.position).normalized;
                 break;
@@ -149,6 +157,7 @@ public class BetterEnemy : MonoBehaviour
 
                 if (!isAttack) ChangeState(States.checking);
 
+                // For some reason the first shot from enemies right as you enter attack takes a long time. This fixes it
                 if (stateDur > projectileStartTemp && projectileAmmoCountTemp > 0)
                 {
                     projectileStartTemp += projectileInterval;
@@ -158,13 +167,21 @@ public class BetterEnemy : MonoBehaviour
                 if (stateDur > projectileInterval && projectileAmmoCountTemp > 0) shootProjectile();
                 if (stateDur > projectileInterval && projectileAmmoCountTemp <= 0) ChangeState(States.reloading);
 
-                dir = new Vector2(0, 0);
-
                 if (isRun && type != EnemyType.Shotgunner) ChangeState(States.running);
+
                 break;
 
             // When running
             case States.running:
+
+                if (!isRun) ChangeState(States.checking);
+
+                if(stateDur > 0.7f && projectileAmmoCountTemp > 0)
+                {
+                    shootProjectile();
+                    stateDur = 0f;
+                }
+                else if (projectileAmmoCountTemp <= 0) ChangeState(States.reloading);
 
                 dir = (player.transform.position - rb.transform.position).normalized;
                 break;
@@ -172,13 +189,13 @@ public class BetterEnemy : MonoBehaviour
             // When reloading
             case States.reloading:
 
-                if (stateDur >= projectileReloadTime)
+                if (stateDur > projectileReloadTime)
                 {
                     projectileAmmoCountTemp = projectileAmmoCount;
                     ChangeState(States.checking);
                 }
 
-                if (isCheck) dir = (player.transform.position - rb.transform.position).normalized;
+                dir = (player.transform.position - rb.transform.position).normalized;
 
                 break;
         }
@@ -218,6 +235,11 @@ public class BetterEnemy : MonoBehaviour
             GameObject firedObj = Instantiate(projectile, transform.position, Quaternion.identity);
 
             firedObj.GetComponent<Projectiles>().projectileDamage = projectileDamage;
+
+            if (type == EnemyType.Shotgunner || type == EnemyType.Sniper)
+            {
+                knockBack(player, -1);
+            }
 
             if (interceptDir(player.transform.position, transform.position, player.GetComponent<Rigidbody2D>().velocity, projectileSpeed, out projectileDir)) firedObj.GetComponent<Rigidbody2D>().velocity = (projectileDir + rb.velocity).normalized * projectileSpeed;
             else firedObj.GetComponent<Rigidbody2D>().velocity = (player.transform.position - transform.position).normalized * projectileSpeed;
@@ -275,8 +297,14 @@ public class BetterEnemy : MonoBehaviour
 
     #endregion
 
-    public void knockBack()
+    public void knockBack(GameObject objPos, int i)
     {
-        
+        Vector2 dir = (objPos.transform.position - rb.transform.position).normalized;
+
+        Vector2 knockback = dir * i * knockbackForce;
+
+        rb.velocity = new Vector2(0f, 0f);
+
+        rb.AddForce(knockback, ForceMode2D.Force);
     }
 }

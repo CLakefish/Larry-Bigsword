@@ -13,6 +13,7 @@ public class Sword : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         HealthPoints hp = collision.gameObject.GetComponent<HealthPoints>();
+        CameraController camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraController>();
 
         if (hp != null && collision.gameObject != recentlyAttacked)
         {
@@ -20,6 +21,9 @@ public class Sword : MonoBehaviour
             if (collision.gameObject.tag == "Projectile")
             {
                 hp.TakeDamage(1);
+
+                camera.shakeDuration = .07f;
+                camera.shakeMagnitude = .15f;
 
                 Instantiate(particleHit, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
 
@@ -29,6 +33,9 @@ public class Sword : MonoBehaviour
             if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<BetterEnemy>().isHit)
             {
                 enemy = collision.gameObject.GetComponent<BetterEnemy>();
+
+                camera.shakeDuration = .07f;
+                camera.shakeMagnitude = .07f;
 
                 Instantiate(particleHit, enemy.transform.position, enemy.transform.rotation);
 
@@ -46,6 +53,7 @@ public class Sword : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         HealthPoints hp = collision.gameObject.GetComponent<HealthPoints>();
+        CameraController camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraController>();
 
         if (hp != null && collision.gameObject != recentlyAttacked)
         {
@@ -54,6 +62,8 @@ public class Sword : MonoBehaviour
             {
                 hp.TakeDamage(1);
 
+                camera.shakeDuration = .07f;
+                camera.shakeMagnitude = .15f;
 
                 Instantiate(particleHit, collision.gameObject.transform.position, enemy.transform.rotation);
                 Destroy(gameObject);
@@ -62,6 +72,9 @@ public class Sword : MonoBehaviour
             if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<BetterEnemy>().isHit)
             {
                 enemy = collision.gameObject.GetComponent<BetterEnemy>();
+
+                camera.shakeDuration = .07f;
+                camera.shakeMagnitude = .07f;
 
                 Instantiate(particleHit, enemy.transform.position, collision.gameObject.transform.rotation);
 

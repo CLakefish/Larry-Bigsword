@@ -32,6 +32,7 @@ public class Projectiles : MonoBehaviour
     {
         HealthPoints hp = collision.gameObject.GetComponent<HealthPoints>();
         BetterMovement player = collision.gameObject.GetComponent<BetterMovement>();
+        CameraController camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraController>();
 
         if (collision.gameObject.layer == 2)
         {
@@ -44,14 +45,18 @@ public class Projectiles : MonoBehaviour
             {
                 if (player.isParry)
                 {
+                    camera.shakeDuration = .1f;
+                    camera.shakeMagnitude = .1f;
+
                     HitManager.ImpactHit();
+
                     // Enemy knockback to prevent shooting
                     foreach (GameObject obj in GameObject.FindGameObjectsWithTag("enemy"))
                     {
                         if (obj.GetComponent<Enemy>() != null)
                         {
                             obj.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                            obj.GetComponent<BetterEnemy>().knockBack();
+                            obj.GetComponent<BetterEnemy>().knockBack(gameObject, -1);
                         }
                     }
 
@@ -66,14 +71,22 @@ public class Projectiles : MonoBehaviour
 
                 if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
+                    camera.shakeDuration = .1f;
+                    camera.shakeMagnitude = .1f;
+
                     HitManager.ImpactHit();
+
                     player.isInvincible = false;
                     return;
                 }
 
                 if (!player.isInvincible)
                 {
+                    camera.shakeDuration = .1f;
+                    camera.shakeMagnitude = .1f;
+
                     HitManager.ImpactHit();
+
                     hp.TakeDamage(projectileDamage);
                 }
             }
@@ -98,6 +111,7 @@ public class Projectiles : MonoBehaviour
     {
         HealthPoints hp = collision.gameObject.GetComponent<HealthPoints>();
         BetterMovement player = collision.gameObject.GetComponent<BetterMovement>();
+        CameraController camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraController>();
 
         if (collision.gameObject.layer == 2)
         {
@@ -110,13 +124,18 @@ public class Projectiles : MonoBehaviour
             {
                 if (player.isParry)
                 {
+                    camera.shakeDuration = .1f;
+                    camera.shakeMagnitude = .1f;
+
+                    HitManager.ImpactHit();
+
                     // Enemy knockback to prevent shooting
                     foreach (GameObject obj in GameObject.FindGameObjectsWithTag("enemy"))
                     {
                         if (obj.GetComponent<Enemy>() != null)
                         {
                             obj.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                            obj.GetComponent<BetterEnemy>().knockBack();
+                            obj.GetComponent<BetterEnemy>().knockBack(gameObject, -1);
                         }
                     }
 
@@ -131,12 +150,18 @@ public class Projectiles : MonoBehaviour
 
                 if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
+                    camera.shakeDuration = .1f;
+                    camera.shakeMagnitude = .1f;
+                    HitManager.ImpactHit();
                     player.isInvincible = false;
                     return;
                 }
 
                 if (!player.isInvincible)
                 {
+                    camera.shakeDuration = .1f;
+                    camera.shakeMagnitude = .1f;
+                    HitManager.ImpactHit();
                     hp.TakeDamage(projectileDamage);
                 }
             }

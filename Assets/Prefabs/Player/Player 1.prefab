@@ -153,15 +153,17 @@ MonoBehaviour:
   hasSword: 0
   moveSpeed: 12
   swordObj: {fileID: 5196036763223211921, guid: f2ab03cc57ff369419b90141a2ca02fd, type: 3}
-  swingDuration: 1.5
+  swingDuration: 1
   swingCooldown: 0.1
-  dashSpeed: 30
-  dashDuration: 0.15
-  dashCooldown: 0.03
+  dashSpeed: 60
+  dashDuration: 0.1
+  dashCooldown: 0.5
   parryDuration: 1
-  parryCooldown: 0.2
+  parryCooldown: 0.4
   isParry: 0
   isInvincible: 0
+  parryVisual: {fileID: 225217279210172575, guid: 1073502a715182c44abc590107e94aed, type: 3}
+  dashParticle: {fileID: 8791935059552515009, guid: 12dc3d0a15c972c4d83903ff80c06e97, type: 3}
 --- !u!114 &6164685039624620865
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -34,7 +34,7 @@ public class Projectiles : MonoBehaviour
         BetterMovement player = collision.gameObject.GetComponent<BetterMovement>();
         CameraController camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraController>();
 
-        if (collision.gameObject.layer == 2)
+        if (collision.gameObject.layer == 2 || collision.gameObject.layer == 10)
         {
             return;
         }
@@ -45,11 +45,12 @@ public class Projectiles : MonoBehaviour
             {
                 if (player.isParry)
                 {
-
                     if (player.GetComponent<SwordInput>().parryVFX != null)
                     {
                         Destroy(player.GetComponent<SwordInput>().parryVFX);
                     }
+
+                    player.GetComponent<HealthPoints>().GainHealth(1);
 
                     camera.shakeDuration = .1f;
                     camera.shakeMagnitude = .1f;
@@ -72,8 +73,12 @@ public class Projectiles : MonoBehaviour
                         Destroy(obj);
                     }
 
+                    player.isParry = player.isInvincible = false;
+
                     return;
                 }
+
+                if (player.isInvincible && player.state != BetterMovement.States.dashing) return;
 
                 if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
@@ -120,7 +125,7 @@ public class Projectiles : MonoBehaviour
         BetterMovement player = collision.gameObject.GetComponent<BetterMovement>();
         CameraController camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraController>();
 
-        if (collision.gameObject.layer == 2)
+        if (collision.gameObject.layer == 2 || collision.gameObject.layer == 10)
         {
             return;
         }
@@ -129,10 +134,15 @@ public class Projectiles : MonoBehaviour
         {
             if (player != null)
             {
-                if (player.isInvincible && player.state != BetterMovement.States.dashing) return;
-
                 if (player.isParry)
                 {
+                    if (player.GetComponent<SwordInput>().parryVFX != null)
+                    {
+                        Destroy(player.GetComponent<SwordInput>().parryVFX);
+                    }
+
+                    player.GetComponent<HealthPoints>().GainHealth(1);
+
                     camera.shakeDuration = .1f;
                     camera.shakeMagnitude = .1f;
 
@@ -157,10 +167,17 @@ public class Projectiles : MonoBehaviour
                     return;
                 }
 
+                if (player.isInvincible && player.state != BetterMovement.States.dashing) return;
+
+
                 if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
                     HitManager.ImpactHit();
+
+                    if (player.parryVFX != null) Destroy(player.parryVFX);
+
                     player.isInvincible = false;
+
                     return;
                 }
 

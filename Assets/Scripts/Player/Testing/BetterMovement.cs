@@ -22,7 +22,7 @@ public class BetterMovement : MonoBehaviour
     [SerializeField] public float swingDuration, swingCooldown;
 
     [Space(3), Header("Dash"), Space(3)]
-    [SerializeField] private float dashSpeed = 30f;
+    [SerializeField] internal float dashSpeed = 30f;
     [SerializeField] private float dashDuration, dashCooldown;
 
     [Space(3), Header("Parry"), Space(3)]
@@ -37,9 +37,14 @@ public class BetterMovement : MonoBehaviour
     [Space(3), Header("https://i.kym-cdn.com/entries/icons/original/000/023/977/cover3.jpg"), Space(3)]
     Vector2 input;
 
+    [Header("Visuals")]
+    public GameObject parryVisual, dashParticle;
+    internal GameObject parryVFX, dashVFX;
+
     private Rigidbody2D rb;
 
     private float stateDur;
+    float speed, speedVel;
 
     #endregion
 
@@ -89,7 +94,7 @@ public class BetterMovement : MonoBehaviour
 
         #endregion
 
-        if (canMove) rb.velocity = input * moveSpeed;
+        if (dashVFX != null) dashVFX.transform.position = rb.transform.position;
 
         #region Statemachine
 
@@ -99,18 +104,21 @@ public class BetterMovement : MonoBehaviour
             switch (state)
             {
                 case States.none:
+
                     canMove = canDash = false;
                     rb.velocity = new Vector2(0f, 0f);
                     break;
 
                 case States.running:
+
                     isInvincible = false;
-                    rb.velocity = new Vector2(0f, 0f);
                     break;
 
                 case States.dashing:
+
                     isInvincible = true;
-                    rb.velocity = new Vector2(0f, 0f);
+                    dashVFX = Instantiate(dashParticle, rb.transform.position, Quaternion.identity);
+                    parryVFX = Instantiate(parryVisual, rb.position, Quaternion.identity);
                     break;
             }
         }
@@ -133,6 +141,8 @@ public class BetterMovement : MonoBehaviour
             // Run Case
             case States.running:
 
+                speed = Mathf.SmoothDamp(speed, moveSpeed, ref speedVel, .075f);
+
                 // Dash w/Cooldown
                 if (dashInput && dashCooldownComplete && canDash) ChangeState(States.dashing);
 
@@ -141,16 +151,21 @@ public class BetterMovement : MonoBehaviour
             // Dash Case
             case States.dashing:
 
-                rb.velocity = input * dashSpeed;
+                if (parryVFX != null) parryVFX.transform.position = rb.transform.position;
+
+                speed = Mathf.SmoothDamp(speed, dashSpeed, ref speedVel, .055f);
 
                 if (stateDur > dashDuration)
                 {
                     ChangeState(States.running);
+                    if (parryVFX != null) Destroy(parryVFX);
                 }
 
                 break;
         }
         #endregion
+
+        if (canMove) rb.velocity = input * speed;
     }
 
     public void knockBack(GameObject objPos)

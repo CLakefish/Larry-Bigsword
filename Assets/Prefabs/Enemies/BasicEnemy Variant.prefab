@@ -104,6 +104,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6394829153436000582, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
+      propertyPath: currentHP
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
+      propertyPath: runRad
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
+      propertyPath: runSpeed
+      value: 8.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
       propertyPath: knockbackForce
       value: 100
@@ -126,11 +138,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
       propertyPath: projectileMaxRandom
-      value: 1.2
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
       propertyPath: projectileMinRandom
-      value: 0.9
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
       propertyPath: projectileReloadTime

@@ -23,14 +23,14 @@ public class Sword : MonoBehaviour
         if (hp != null && collision.gameObject != recentlyAttacked)
         {
             // Projectile Deflect Case
-            if (collision.gameObject.tag == "Projectile")
+           /* if (collision.gameObject.tag == "Projectile")
             {
                 hp.TakeDamage(1);
 
                 Instantiate(particleHit, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
 
                 return;
-            }
+            }*/
             if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<BetterEnemy>().isHit)
             {
                 enemy = collision.gameObject.GetComponent<BetterEnemy>();
@@ -56,17 +56,17 @@ public class Sword : MonoBehaviour
         HealthPoints hp = collision.gameObject.GetComponent<HealthPoints>();
         CameraController camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraController>();
 
-        if (hp != null && collision.gameObject != recentlyAttacked)
+       if (hp != null && collision.gameObject != recentlyAttacked)
         {
             // Projectile Deflect Case
-            if (collision.gameObject.tag == "Projectile")
-            {
-                hp.TakeDamage(1);
+            /*if (collision.gameObject.tag == "Projectile")
+           {
+               hp.TakeDamage(1);
 
-                Instantiate(particleHit, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
+               Instantiate(particleHit, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
 
-                return;
-            }
+               return;
+           }*/
             if (collision.gameObject.tag == "enemy" && !collision.gameObject.GetComponent<BetterEnemy>().isHit)
             {
                 enemy = collision.gameObject.GetComponent<BetterEnemy>();

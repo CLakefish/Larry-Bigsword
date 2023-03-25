@@ -90,8 +90,14 @@ public class SwordInput : MonoBehaviour
                     SwordMovement();
                 }
 
-                // End of duration
-                if (stateDur > p.swingDuration)
+                if (parryInput && parryCooldownComplete)
+                {
+                    if (sword != null) Destroy(sword);
+                    ChangeState(States.parrying);
+                }
+
+                    // End of duration
+                    if (stateDur > p.swingDuration)
                 {
                     ChangeState(States.none);
                     Destroy(sword);

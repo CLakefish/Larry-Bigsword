@@ -44,7 +44,7 @@ public class BetterEnemy : MonoBehaviour
     public float knockbackForce;
 
     [Space(3), Header("Projectile Variables"), Space(3)]
-    [Space(3), SerializeField] private GameObject projectile;
+    [Space(3), SerializeField] internal GameObject projectile;
     [Space(3), SerializeField] private float projectileSpeed; 
     [SerializeField] private float projectileStartTime;
     [Space(3), SerializeField] private float projectileCount;
@@ -131,7 +131,7 @@ public class BetterEnemy : MonoBehaviour
 
                 if (projectileAmmoCountTemp <= 0) ChangeState(States.reloading);
 
-                if (stateDur > .7f)
+                if (stateDur > .5f)
                 {
                     if (isCheck) ChangeState(States.checking);
                 }
@@ -245,8 +245,14 @@ public class BetterEnemy : MonoBehaviour
                 knockBack(player, -1);
             }
 
-            if (interceptDir(player.transform.position, transform.position, player.GetComponent<Rigidbody2D>().velocity, projectileSpeed, out projectileDir)) firedObj.GetComponent<Rigidbody2D>().velocity = (projectileDir + rb.velocity).normalized * projectileSpeed;
-            else firedObj.GetComponent<Rigidbody2D>().velocity = (player.transform.position - transform.position).normalized * projectileSpeed;
+            if (interceptDir(player.transform.position, transform.position, player.GetComponent<Rigidbody2D>().velocity.normalized * Mathf.Min(player.GetComponent<Rigidbody2D>().velocity.magnitude, player.GetComponent<BetterMovement>().dashSpeed), projectileSpeed, out projectileDir))
+            {
+                firedObj.GetComponent<Rigidbody2D>().velocity = (projectileDir + rb.velocity).normalized * projectileSpeed;
+            }
+            else
+            {
+                firedObj.GetComponent<Rigidbody2D>().velocity = (player.transform.position - transform.position).normalized * projectileSpeed;
+            }
 
             projectileAmmoCountTemp--;
         }
@@ -292,7 +298,7 @@ public class BetterEnemy : MonoBehaviour
 
         var dA = Mathf.Max(r1, r2);
         var t = dA / projectileSpeed;
-        var c = (playerObj * Random.Range(projectileMinRandom, projectileMaxRandom)) + playerVel * t;
+        var c = playerObj + new Vector2(Random.Range(projectileMinRandom, projectileMaxRandom), Random.Range(projectileMinRandom, projectileMaxRandom)) + playerVel * t;
 
         dir = (c - enemyObj).normalized;
 

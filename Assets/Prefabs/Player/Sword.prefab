@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5162531186137798110}
   m_LocalRotation: {x: -0, y: -0, z: -0.7170785, w: 0.69699246}
-  m_LocalPosition: {x: 2.97, y: 0.02, z: -3.81}
-  m_LocalScale: {x: 1, y: 0.83757, z: 1}
+  m_LocalPosition: {x: 3.412, y: 0.01, z: -3.81}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5196036763223211923}
@@ -73,7 +73,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -90
+  m_SortingOrder: -2
   m_Time: 0.2
   m_Parameters:
     serializedVersion: 3
@@ -207,7 +207,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 29fd1c8bd12f3554cb1d3294437ebcc9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 10052538bbeace1468cad3537fbe6ed9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

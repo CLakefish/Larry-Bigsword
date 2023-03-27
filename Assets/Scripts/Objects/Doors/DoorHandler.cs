@@ -33,9 +33,10 @@ public class DoorHandler : MonoBehaviour
                 if (obj.activeSelf)
                 {
                     obj.SetActive(false);
-                    gameObject.GetComponent<AudioSource>().Play();
                 }
             }
+
+            gameObject.GetComponent<AudioSource>().Play();
 
             if (instance == 2)
             {
@@ -50,10 +51,11 @@ public class DoorHandler : MonoBehaviour
                 if (!obj.activeSelf)
                 {
                     obj.SetActive(true);
-                    gameObject.GetComponent<AudioSource>().Play();
                     instance++;
                 }
             }
+
+            gameObject.GetComponent<AudioSource>().Play();
         }
     }
 

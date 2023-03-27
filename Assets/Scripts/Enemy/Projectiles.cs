@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Projectiles : MonoBehaviour
 {
+    public GameObject playerProjectile;
+
     [Header("Damage Variables")]
     [Space(3)]
     public bool timedDestroy;
@@ -32,13 +34,33 @@ public class Projectiles : MonoBehaviour
     {
         HealthPoints hp = collision.gameObject.GetComponent<HealthPoints>();
         BetterMovement player = collision.gameObject.GetComponent<BetterMovement>();
-        CameraController camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraController>();
+        BetterEnemy enemy = collision.gameObject.GetComponent<BetterEnemy>();
+        CameraManager camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraManager>();
 
         if (collision.gameObject.layer == 2 || collision.gameObject.layer == 10)
         {
             return;
         }
 
+        // Enemy hits
+        if (hp != null)
+        {
+            if (enemy != null)
+            {
+                if (enemy.isHit) return;
+
+                camera.shakeDuration = .05f;
+                camera.shakeMagnitude = .1f;
+
+                hp.TakeDamage(1);
+                enemy.knockBack(gameObject, -1, 3f);
+                enemy.isHit = true;
+                enemy.state = BetterEnemy.States.none;
+                Destroy(gameObject);
+            }
+        }
+
+        // Player Hits
         if (hp != null)
         {
             if (player != null)
@@ -57,44 +79,51 @@ public class Projectiles : MonoBehaviour
 
                     HitManager.ImpactHit();
 
-                    // Enemy knockback to prevent shooting
-                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("enemy"))
-                    {
-                        if (obj.GetComponent<Enemy>() != null)
-                        {
-                            obj.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                            obj.GetComponent<BetterEnemy>().knockBack(gameObject, -1);
-                        }
-                    }
-
                     // Destroy all projectiles
                     foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Projectile"))
                     {
                         Destroy(obj);
                     }
 
-                    player.isParry = player.isInvincible = false;
+                    // Enemy knockback to prevent shooting
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("enemy"))
+                    {
+                        if (obj.GetComponent<BetterEnemy>() != null)
+                        {
+                            enemy = obj.GetComponent<BetterEnemy>();
+
+                            enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                            enemy.knockBack(gameObject, -1, 5);
+
+                            enemy.state = BetterEnemy.States.none;
+                        }
+
+                        GameObject firedObj = Instantiate(playerProjectile, transform.position, Quaternion.identity);
+                        firedObj.GetComponent<Rigidbody2D>().velocity = (enemy.transform.position - collision.gameObject.transform.position).normalized * 15f;
+                    }
 
                     return;
                 }
 
-                if (player.isInvincible && player.state != BetterMovement.States.dashing) return;
+                if (player.isInvincible && player.state != BetterMovement.States.dashing && !player.isParry) return;
 
                 if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
                     HitManager.ImpactHit();
 
+                    if (player.parryVFX != null) Destroy(player.parryVFX);
+
                     player.isInvincible = false;
+
                     return;
                 }
+
 
                 if (!player.isInvincible)
                 {
                     camera.shakeDuration = .1f;
                     camera.shakeMagnitude = .1f;
-
                     HitManager.ImpactHit();
-
                     hp.TakeDamage(projectileDamage);
 
                     StartCoroutine(IFrame());
@@ -103,6 +132,7 @@ public class Projectiles : MonoBehaviour
                 }
             }
         }
+
         if (destroyOnCollide)
         {
             if (hasDeathEffect && deathEffect != null)
@@ -123,13 +153,35 @@ public class Projectiles : MonoBehaviour
     {
         HealthPoints hp = collision.gameObject.GetComponent<HealthPoints>();
         BetterMovement player = collision.gameObject.GetComponent<BetterMovement>();
-        CameraController camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraController>();
+        BetterEnemy enemy = collision.gameObject.GetComponent<BetterEnemy>();
+        CameraManager camera = GameObject.FindGameObjectWithTag("MainCamera").gameObject.GetComponent<CameraManager>();
 
         if (collision.gameObject.layer == 2 || collision.gameObject.layer == 10)
         {
             return;
         }
 
+        // Enemy hits
+        if (hp != null)
+        {
+            if (enemy != null)
+            {
+                if (enemy.isHit) return;
+
+                camera.shakeDuration = .05f;
+                camera.shakeMagnitude = .1f;
+
+                hp.TakeDamage(1);
+
+                enemy.knockBack(gameObject, -1, 3f);
+                enemy.isHit = true;
+                enemy.state = BetterEnemy.States.none;
+
+                Destroy(gameObject);
+            }
+        }
+
+        // Player Hits
         if (hp != null)
         {
             if (player != null)
@@ -148,27 +200,34 @@ public class Projectiles : MonoBehaviour
 
                     HitManager.ImpactHit();
 
-                    // Enemy knockback to prevent shooting
-                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("enemy"))
-                    {
-                        if (obj.GetComponent<Enemy>() != null)
-                        {
-                            obj.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                            obj.GetComponent<BetterEnemy>().knockBack(gameObject, -1);
-                        }
-                    }
-
                     // Destroy all projectiles
                     foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Projectile"))
                     {
                         Destroy(obj);
                     }
 
+                    // Enemy knockback to prevent shooting
+                    foreach (GameObject obj in GameObject.FindGameObjectsWithTag("enemy"))
+                    {
+                        if (obj.GetComponent<BetterEnemy>() != null)
+                        {
+                            enemy = obj.GetComponent<BetterEnemy>();
+
+                            enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                            enemy.knockBack(gameObject, -1, 5);
+
+                            enemy.isHit = true;
+                            enemy.state = BetterEnemy.States.none;
+
+                        }
+                                                    GameObject firedObj = Instantiate(playerProjectile, transform.position, Quaternion.identity);
+                            firedObj.GetComponent<Rigidbody2D>().velocity = (enemy.transform.position - collision.gameObject.transform.position).normalized * 15f;
+                    }
+
                     return;
                 }
 
-                if (player.isInvincible && player.state != BetterMovement.States.dashing) return;
-
+                if (player.isInvincible && player.state != BetterMovement.States.dashing && !player.isParry) return;
 
                 if (player.isInvincible && player.state == BetterMovement.States.dashing)
                 {
@@ -180,6 +239,7 @@ public class Projectiles : MonoBehaviour
 
                     return;
                 }
+
 
                 if (!player.isInvincible)
                 {
@@ -194,6 +254,7 @@ public class Projectiles : MonoBehaviour
                 }
             }
         }
+
         if (destroyOnCollide)
         {
             if (hasDeathEffect && deathEffect != null)

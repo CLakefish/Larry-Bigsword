@@ -8,14 +8,12 @@ public class HitManager : MonoBehaviour
     private static HitManager instance;
     static GameObject player;
     BetterMovement playerScript;
-    Camera cam;
 
     private void Awake()
     {
         instance = this;
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<BetterMovement>();
-        cam = FindObjectOfType<Camera>();
     }
 
     public static void ImpactHit()

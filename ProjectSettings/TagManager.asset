@@ -9,6 +9,7 @@ TagManager:
   - Projectile
   - Door
   - Breakable
+  - PlayerProjectile
   layers:
   - Default
   - TransparentFX

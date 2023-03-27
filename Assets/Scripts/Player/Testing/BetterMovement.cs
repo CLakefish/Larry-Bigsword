@@ -16,6 +16,7 @@ public class BetterMovement : MonoBehaviour
 
     [Space(3), Header("Movement"), Space(3)]
     [SerializeField] private float moveSpeed = 12f;
+    [SerializeField] private float accelerationTime, decelerationTime;
 
     [Space(3), Header("Sword"), Space(3)]
     public GameObject swordObj;
@@ -43,6 +44,7 @@ public class BetterMovement : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    Vector2 currentVel;
     private float stateDur;
     float speed, speedVel;
 
@@ -82,6 +84,7 @@ public class BetterMovement : MonoBehaviour
 
         // Inputs 
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        bool inputting = input != Vector2.zero;
 
         bool dashInput = Input.GetKeyDown(dashKey);
 
@@ -165,7 +168,11 @@ public class BetterMovement : MonoBehaviour
         }
         #endregion
 
-        if (canMove) rb.velocity = input * speed;
+        Vector2 desiredVel = input * speed;
+
+        float acceleration = inputting ? accelerationTime : decelerationTime;
+
+        if (canMove) rb.velocity = Vector2.SmoothDamp(rb.velocity, desiredVel, ref currentVel, acceleration);
     }
 
     public void knockBack(GameObject objPos)

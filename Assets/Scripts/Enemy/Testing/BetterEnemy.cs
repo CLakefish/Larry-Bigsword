@@ -129,12 +129,17 @@ public class BetterEnemy : MonoBehaviour
             // When not doing anything else
             case States.none:
 
-                if (projectileAmmoCountTemp <= 0) ChangeState(States.reloading);
+                if (isHit && stateDur > 0.3f)
+                {
+                    isHit = false;
+                }
 
-                if (stateDur > .5f)
+                if (stateDur > 0.5f)
                 {
                     if (isCheck) ChangeState(States.checking);
                 }
+
+                if (projectileAmmoCountTemp <= 0) ChangeState(States.reloading);
 
                 break;
 
@@ -307,11 +312,11 @@ public class BetterEnemy : MonoBehaviour
 
     #endregion
 
-    public void knockBack(GameObject objPos, int i)
+    public void knockBack(GameObject objPos, int i, float multiplier = 1)
     {
         Vector2 dir = (objPos.transform.position - rb.transform.position).normalized;
 
-        Vector2 knockback = dir * i * knockbackForce;
+        Vector2 knockback = dir * i * knockbackForce * multiplier;
 
         rb.velocity = new Vector2(0f, 0f);
 

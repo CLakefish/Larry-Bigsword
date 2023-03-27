@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraBounds : MonoBehaviour
+public class BoundsObj : MonoBehaviour
 {
-    #region Variables
+    [Header("Camera Variables")]
+    [SerializeField] internal float size;
+    [SerializeField] internal float transitionTime, transitionScaleTime;
+
+    [Header("Door System")]
+    public DoorHandler doorHandler;
 
     [System.Serializable]
     public class EnemyData
@@ -12,17 +17,6 @@ public class CameraBounds : MonoBehaviour
         public GameObject enemy;
         public int chanceIncrease = 1;
     }
-
-    [Header("Camera Variables")]
-    [Space()]
-    public bool followPlayer;
-    [Space()]
-    public float desiredSize;
-    public float transitionTime;
-    public float transitionScaleTime;
-
-    [Header("Door System")]
-    public DoorHandler doorHandler;
 
     [Header("Spawn Enemies")]
     [Space()]
@@ -36,8 +30,6 @@ public class CameraBounds : MonoBehaviour
     public float enemyCount, distance;
     float enemyCountTemp;
     List<GameObject> enemyList = new();
-
-    #endregion
 
     private void Start()
     {
@@ -57,8 +49,6 @@ public class CameraBounds : MonoBehaviour
         }
     }
 
-    #region Collisions
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (spawnEnemies) doorHandler.closeDoors();
@@ -66,10 +56,10 @@ public class CameraBounds : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // Camera works based off of collision detections, you set the instance to this to allow for proper movement between the 2. Otherwise it doesn't work
-        if (collision.gameObject.tag == "Player" && CameraController.instance)
+        if (collision.gameObject.tag == "Player" && CameraManager.instance && CameraManager.instance.bounds != this)
         {
-            CameraController.instance.bounds = this;
+            CameraManager.instance.bounds = this;
+            CameraManager.instance.boundsRender = CameraManager.instance.bounds.gameObject.GetComponent<SpriteRenderer>();
         }
 
         if (spawnEnemies)
@@ -77,15 +67,14 @@ public class CameraBounds : MonoBehaviour
             StartCoroutine(SpawnEnemies());
         }
     }
-        private void OnTriggerExit2D(Collider2D collision)
+
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (CameraController.instance && CameraController.instance.bounds == this)
+        if (CameraManager.instance && CameraManager.instance.bounds == this)
         {
-            CameraController.instance.bounds = null;
+            CameraManager.instance.bounds = null;
         }
     }
-
-    #endregion
 
     IEnumerator SpawnEnemies()
     {

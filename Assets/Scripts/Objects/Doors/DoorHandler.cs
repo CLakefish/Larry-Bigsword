@@ -75,4 +75,16 @@ public class DoorHandler : MonoBehaviour
             }
         }
     }
+
+    public void closeDoors()
+    {
+        foreach (GameObject obj in DoorObjs)
+        {
+            if (!obj.activeSelf)
+            {
+                obj.SetActive(true);
+                gameObject.GetComponent<AudioSource>().Play();
+            }
+        }
+    }
 }

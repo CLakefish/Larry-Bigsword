@@ -11,6 +11,8 @@ public class SwordInput : MonoBehaviour
     internal GameObject sword;
     BetterMovement p;
     Rigidbody2D rb;
+    float angle;
+    int i = 0;
 
     private float stateDur;
 
@@ -65,6 +67,7 @@ public class SwordInput : MonoBehaviour
 
                 case States.swinging:
                     sword = Instantiate(p.swordObj, rb.position, rb.transform.rotation);
+                    if (sword != null) SwordMovement();
                     break;
             }
         }
@@ -84,10 +87,21 @@ public class SwordInput : MonoBehaviour
 
             case States.swinging:
 
-                // If sword is broken via projectile
                 if (sword != null)
                 {
-                    SwordMovement();
+                    sword.transform.position = rb.transform.position;
+
+                    if (i == 0)
+                    {
+                        sword.transform.eulerAngles = Vector3.Lerp(sword.transform.eulerAngles, new Vector3(0f, 0f, sword.transform.eulerAngles.z + 180f), 4f * Time.deltaTime);
+                        StartCoroutine(swordSwingIntDiff(1));
+                    }
+
+                    if (i == 1)
+                    {
+                        sword.transform.eulerAngles = Vector3.Lerp(sword.transform.eulerAngles, new Vector3(0f, 0f, sword.transform.eulerAngles.z - 180f), 4f * Time.deltaTime);
+                        StartCoroutine(swordSwingIntDiff(0));
+                    }
                 }
 
                 if (parryInput && parryCooldownComplete)
@@ -97,7 +111,7 @@ public class SwordInput : MonoBehaviour
                 }
 
                     // End of duration
-                    if (stateDur > p.swingDuration)
+                if (stateDur > p.swingDuration)
                 {
                     ChangeState(States.none);
                     Destroy(sword);
@@ -124,10 +138,18 @@ public class SwordInput : MonoBehaviour
     void SwordMovement()
     {
         // Mouse Position Rotations
-        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+
+        if (i == 0) angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg - 60f;
+        if (i == 1) angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg + 60f;
+
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         sword.transform.rotation = rotation;
-        sword.transform.position = rb.transform.position;
+    }
+
+    IEnumerator swordSwingIntDiff(int val)
+    {
+        yield return new WaitForSeconds(p.swingDuration);
+        i = val;
     }
 }

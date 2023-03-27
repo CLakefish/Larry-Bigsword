@@ -60,6 +60,8 @@ public class BetterMovement : MonoBehaviour
 
     internal States state, prevState;
 
+    public Animator anim;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -85,6 +87,8 @@ public class BetterMovement : MonoBehaviour
         // Inputs 
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         bool inputting = input != Vector2.zero;
+
+        Animate(inputting);
 
         bool dashInput = Input.GetKeyDown(dashKey);
 
@@ -173,6 +177,18 @@ public class BetterMovement : MonoBehaviour
         float acceleration = inputting ? accelerationTime : decelerationTime;
 
         if (canMove) rb.velocity = Vector2.SmoothDamp(rb.velocity, desiredVel, ref currentVel, acceleration);
+    }
+
+    void Animate(bool inputs)
+    {
+        if(input.x == 0 && input.y == 0) anim.SetBool("isMoving", false);
+        else anim.SetBool("isMoving", true);
+
+        if (swordObj != null) anim.SetBool("isSword", true);
+        else anim.SetBool("isSword", false);
+
+        anim.SetFloat("AnimMoveX", input.x);
+        anim.SetFloat("AnimMoveY", input.y);
     }
 
     public void knockBack(GameObject objPos)

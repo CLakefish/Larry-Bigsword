@@ -6,6 +6,7 @@ public class TurretObj : MonoBehaviour
 {
     public GameObject projectile, aimObj;
     public float intervalTime, speed;
+    public float destroyTime;
     public bool isHorizontal = false;
     public bool isLeft = false;
     GameObject obj;
@@ -34,6 +35,7 @@ public class TurretObj : MonoBehaviour
 
         obj = Instantiate(projectile, dir, Quaternion.identity);
 
+        obj.GetComponent<Projectiles>().deathTime = destroyTime;
         obj.GetComponent<Rigidbody2D>().velocity = (aimObj.transform.position - transform.position).normalized * speed;
     }
 }

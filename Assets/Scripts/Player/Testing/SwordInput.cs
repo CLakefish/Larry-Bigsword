@@ -93,13 +93,13 @@ public class SwordInput : MonoBehaviour
 
                     if (i == 0)
                     {
-                        sword.transform.eulerAngles = Vector3.Lerp(sword.transform.eulerAngles, new Vector3(0f, 0f, sword.transform.eulerAngles.z + 180f), 4f * Time.deltaTime);
+                        sword.transform.eulerAngles = Vector3.Lerp(sword.transform.eulerAngles, new Vector3(0f, 0f, sword.transform.eulerAngles.z + 180f), 5f * Time.deltaTime);
                         StartCoroutine(swordSwingIntDiff(1));
                     }
 
                     if (i == 1)
                     {
-                        sword.transform.eulerAngles = Vector3.Lerp(sword.transform.eulerAngles, new Vector3(0f, 0f, sword.transform.eulerAngles.z - 180f), 4f * Time.deltaTime);
+                        sword.transform.eulerAngles = Vector3.Lerp(sword.transform.eulerAngles, new Vector3(0f, 0f, sword.transform.eulerAngles.z - 180f), 5f * Time.deltaTime);
                         StartCoroutine(swordSwingIntDiff(0));
                     }
                 }

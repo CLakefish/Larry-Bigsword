@@ -1,7 +1,9 @@
-/*nico Sayed
- * 10/3/22
- *  This code is responcible for amount of health every sprite has as well as damage
- */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Nico Sayed
+ * Date: 3 / 10 / 2023
+ * Desc: Basic Health Script 
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

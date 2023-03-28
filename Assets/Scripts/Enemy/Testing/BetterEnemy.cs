@@ -1,6 +1,11 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Carson Lakefish
+ * Date: 3 / 22 / 2023
+ * Desc: Enemy Script v.2
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BetterEnemy : MonoBehaviour
@@ -55,6 +60,9 @@ public class BetterEnemy : MonoBehaviour
     float projectileAmmoCountTemp, projectileStartTemp;
     internal bool isHit;
 
+    public AudioClip enemyShoot;
+    AudioSource audioSrc;
+
     [Header("Misc")]
     GameObject player;
     Rigidbody2D rb;
@@ -69,6 +77,8 @@ public class BetterEnemy : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        audioSrc = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -261,6 +271,8 @@ public class BetterEnemy : MonoBehaviour
 
             projectileAmmoCountTemp--;
         }
+
+        audioSrc.PlayOneShot(enemyShoot);
 
         stateDur = 0f;
     }

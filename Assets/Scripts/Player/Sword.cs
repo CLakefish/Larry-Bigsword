@@ -1,3 +1,10 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Carson Lakefish
+ * Date: 3 / 23 / 2023
+ * Desc: Sword Collisions
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +17,14 @@ public class Sword : MonoBehaviour
     internal BetterEnemy enemy;
     GameObject recentlyAttacked;
 
+    public AudioClip hitSound, dieSound;
+    AudioSource audioSrc;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        audioSrc = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -32,13 +44,18 @@ public class Sword : MonoBehaviour
 
                 Instantiate(particleHit, enemy.transform.position, enemy.transform.rotation);
 
+                audioSrc.PlayOneShot(hitSound, 10f);
+
                 enemy.isHit = true;
                 enemy.state = BetterEnemy.States.none;
                 enemy.knockBack(player.gameObject, -1);
 
                 HitManager.ImpactHit();
 
+                if (hp.currentHP - 1 == 0) audioSrc.PlayOneShot(dieSound);
+
                 hp.TakeDamage(1);
+
                 return;
             }
 
@@ -64,13 +81,18 @@ public class Sword : MonoBehaviour
 
                 Instantiate(particleHit, enemy.transform.position, enemy.transform.rotation);
 
+                audioSrc.PlayOneShot(hitSound, 10f);
+
                 enemy.isHit = true;
                 enemy.state = BetterEnemy.States.none;
                 enemy.knockBack(player.gameObject, -1);
 
                 HitManager.ImpactHit();
 
+                if (hp.currentHP - 1 == 0) audioSrc.PlayOneShot(dieSound);
+
                 hp.TakeDamage(1);
+
                 return;
             }
 

@@ -1,7 +1,9 @@
-/*Name Nico Sayed
- * Date 3/15/2023
- * Enemys shooter
- */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Nico Sayed
+ * Date: 3 / 15 / 2023
+ * Desc: Basic projectile script (UNUSED)
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

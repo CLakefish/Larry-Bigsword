@@ -1,6 +1,14 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Carson Lakefish & Nico Sayed
+ * Date: 3 / 22 / 2023
+ * Desc: Health Points script
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthPoints : MonoBehaviour
 {
@@ -8,6 +16,12 @@ public class HealthPoints : MonoBehaviour
     [Space(3)]
     public bool isPlayer;
     [Space(3)]
+    public HealthBar healthBar;
+
+    [Space()]
+    public AudioClip enemyHit, playerHit, enemyDie;
+    AudioSource audioSrc;
+    [Space()]
 
     [Header("Health")]
     [Space(3)]
@@ -24,11 +38,19 @@ public class HealthPoints : MonoBehaviour
     public float deathTime;
     bool invincibility;
 
+    private void Start()
+    {
+        if (isPlayer) healthBar = GameObject.FindObjectOfType<HealthBar>().GetComponent<HealthBar>();
+        audioSrc = GetComponent<AudioSource>();
+    }
+
     private void Update()
     {
         if (isPlayer)
         {
             invincibility = gameObject.GetComponent<BetterMovement>().isInvincible;
+
+            healthBar.updateHealthBar(gameObject.GetComponent<HealthPoints>().maxHP, gameObject.GetComponent<HealthPoints>().currentHP);
         }
     }
 
@@ -48,6 +70,8 @@ public class HealthPoints : MonoBehaviour
                 currentHP = 0;
             }
 
+            audioSrc.PlayOneShot(playerHit);
+
             StartCoroutine(invincibilityFrame());
 
             return;
@@ -55,6 +79,8 @@ public class HealthPoints : MonoBehaviour
         else
         {
             currentHP -= damage;
+
+            audioSrc.PlayOneShot(enemyHit);
 
             if (currentHP <= 0)
             {
@@ -65,7 +91,7 @@ public class HealthPoints : MonoBehaviour
                     if (deathEffect)
                     {
                         onDeath();
-                        Destroy(gameObject);
+                        Destroy(gameObject, .2f);
                         return;
                     }
 
@@ -91,6 +117,7 @@ public class HealthPoints : MonoBehaviour
 
         if (deathObj != null)
         {
+            audioSrc.PlayOneShot(enemyDie);
             Vector3 spawnPos = transform.position;
             obj = Instantiate(deathObj, spawnPos, transform.rotation);
             Destroy(obj, deathTime);

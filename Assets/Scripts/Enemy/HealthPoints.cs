@@ -18,6 +18,11 @@ public class HealthPoints : MonoBehaviour
     [Space(3)]
     public HealthBar healthBar;
 
+    [Space()]
+    public AudioClip enemyHit, playerHit, enemyDie;
+    AudioSource audioSrc;
+    [Space()]
+
     [Header("Health")]
     [Space(3)]
     public bool destroyAtZero;
@@ -35,7 +40,8 @@ public class HealthPoints : MonoBehaviour
 
     private void Start()
     {
-        healthBar = GameObject.FindObjectOfType<HealthBar>().GetComponent<HealthBar>();
+        if (isPlayer) healthBar = GameObject.FindObjectOfType<HealthBar>().GetComponent<HealthBar>();
+        audioSrc = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -64,6 +70,8 @@ public class HealthPoints : MonoBehaviour
                 currentHP = 0;
             }
 
+            audioSrc.PlayOneShot(playerHit);
+
             StartCoroutine(invincibilityFrame());
 
             return;
@@ -71,6 +79,8 @@ public class HealthPoints : MonoBehaviour
         else
         {
             currentHP -= damage;
+
+            audioSrc.PlayOneShot(enemyHit);
 
             if (currentHP <= 0)
             {
@@ -81,7 +91,7 @@ public class HealthPoints : MonoBehaviour
                     if (deathEffect)
                     {
                         onDeath();
-                        Destroy(gameObject);
+                        Destroy(gameObject, .2f);
                         return;
                     }
 
@@ -107,6 +117,7 @@ public class HealthPoints : MonoBehaviour
 
         if (deathObj != null)
         {
+            audioSrc.PlayOneShot(enemyDie);
             Vector3 spawnPos = transform.position;
             obj = Instantiate(deathObj, spawnPos, transform.rotation);
             Destroy(obj, deathTime);

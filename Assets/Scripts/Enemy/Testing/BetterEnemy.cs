@@ -60,6 +60,9 @@ public class BetterEnemy : MonoBehaviour
     float projectileAmmoCountTemp, projectileStartTemp;
     internal bool isHit;
 
+    public AudioClip enemyShoot;
+    AudioSource audioSrc;
+
     [Header("Misc")]
     GameObject player;
     Rigidbody2D rb;
@@ -74,6 +77,8 @@ public class BetterEnemy : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        audioSrc = GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -267,7 +272,7 @@ public class BetterEnemy : MonoBehaviour
             projectileAmmoCountTemp--;
         }
 
-        AudioHandler.PlaySound("eS");
+        audioSrc.PlayOneShot(enemyShoot);
 
         stateDur = 0f;
     }

@@ -23,6 +23,9 @@ public class SwordInput : MonoBehaviour
     float parryDur;
     int i = 0;
 
+    public AudioClip swingSound, parrySound;
+    AudioSource audioSrc;
+
     private float stateDur;
 
     private enum States
@@ -40,6 +43,7 @@ public class SwordInput : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         cam = FindObjectOfType<Camera>();
         p = gameObject.GetComponent<BetterMovement>();
+        audioSrc = GetComponent<AudioSource>();
 
         pBar = FindObjectOfType<ParryBar>().GetComponent<ParryBar>();
     }
@@ -70,6 +74,7 @@ public class SwordInput : MonoBehaviour
             switch (state)
             {
                 case States.parrying:
+                    audioSrc.PlayOneShot(parrySound, 20f);
                     parryVFX = Instantiate(parryVisual, rb.position, Quaternion.identity);
                     p.isInvincible = true;
                     p.isParry = true;
@@ -77,6 +82,7 @@ public class SwordInput : MonoBehaviour
                     break;
 
                 case States.swinging:
+                    audioSrc.PlayOneShot(swingSound);
                     sword = Instantiate(p.swordObj, rb.position, rb.transform.rotation);
                     if (sword != null) SwordMovement();
                     break;
@@ -141,6 +147,7 @@ public class SwordInput : MonoBehaviour
             case States.parrying:
 
                 if(parryVFX != null) parryVFX.transform.position = rb.transform.position;
+
 
                 if (stateDur > p.parryDuration || (FindObjectOfType<Enemy>() && !FindObjectOfType<Enemy>().canCheck))
                 {

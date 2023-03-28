@@ -36,13 +36,13 @@ public class DoorHandler : MonoBehaviour
                 }
             }
 
-            gameObject.GetComponent<AudioSource>().Play();
-
             if (instance == 2)
             {
                 SpawnObj();
                 instance--;
             }
+
+            return;
         }
         else
         {
@@ -55,7 +55,7 @@ public class DoorHandler : MonoBehaviour
                 }
             }
 
-            AudioHandler.PlaySound("d");
+            return;
         }
     }
 
@@ -85,7 +85,6 @@ public class DoorHandler : MonoBehaviour
             if (!obj.activeSelf)
             {
                 obj.SetActive(true);
-                gameObject.GetComponent<AudioSource>().Play();
             }
         }
     }

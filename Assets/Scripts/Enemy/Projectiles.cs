@@ -64,8 +64,6 @@ public class Projectiles : MonoBehaviour
                 enemy.isHit = true;
                 enemy.state = BetterEnemy.States.none;
 
-                AudioHandler.PlaySound("eH");
-
                 Destroy(gameObject);
             }
         }
@@ -81,8 +79,6 @@ public class Projectiles : MonoBehaviour
                     {
                         Destroy(player.GetComponent<SwordInput>().parryVFX);
                     }
-
-                    AudioHandler.PlaySound("pP");
 
                     player.GetComponent<HealthPoints>().GainHealth(1);
 
@@ -125,7 +121,6 @@ public class Projectiles : MonoBehaviour
 
                     if (player.parryVFX != null) Destroy(player.parryVFX);
 
-                    AudioHandler.PlaySound("pH");
                     player.isInvincible = false;
 
                     return;
@@ -140,8 +135,6 @@ public class Projectiles : MonoBehaviour
                     hp.TakeDamage(projectileDamage);
 
                     StartCoroutine(IFrame());
-
-                    AudioHandler.PlaySound("pH");
 
                     player.knockBack(gameObject);
                 }
@@ -207,9 +200,6 @@ public class Projectiles : MonoBehaviour
                     {
                         Destroy(player.GetComponent<SwordInput>().parryVFX);
                     }
-
-                    AudioHandler.PlaySound("pP");
-
                     player.GetComponent<HealthPoints>().GainHealth(1);
 
                     camera.shakeDuration = .1f;
@@ -250,8 +240,6 @@ public class Projectiles : MonoBehaviour
                     HitManager.ImpactHit();
 
                     if (player.parryVFX != null) Destroy(player.parryVFX);
-
-                    AudioHandler.PlaySound("pH");
                     player.isInvincible = false;
 
                     return;
@@ -266,8 +254,6 @@ public class Projectiles : MonoBehaviour
                     hp.TakeDamage(projectileDamage);
 
                     StartCoroutine(IFrame());
-
-                    AudioHandler.PlaySound("pH");
 
                     player.knockBack(gameObject);
                 }

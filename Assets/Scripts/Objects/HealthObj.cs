@@ -1,3 +1,10 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Nico Sayed
+ * Date: 3 / 24 / 2023
+ * Desc: Health Object
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

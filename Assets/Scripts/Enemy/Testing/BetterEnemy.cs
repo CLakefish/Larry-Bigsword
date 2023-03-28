@@ -1,6 +1,11 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Carson Lakefish
+ * Date: 3 / 22 / 2023
+ * Desc: Enemy Script v.2
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BetterEnemy : MonoBehaviour
@@ -261,6 +266,8 @@ public class BetterEnemy : MonoBehaviour
 
             projectileAmmoCountTemp--;
         }
+
+        AudioHandler.PlaySound("eS");
 
         stateDur = 0f;
     }

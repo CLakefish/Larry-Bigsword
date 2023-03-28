@@ -1,3 +1,10 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Carson Lakefish
+ * Date: 3 / 24 / 2023
+ * Desc: Improved character controller, used in the game
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -118,7 +125,6 @@ public class BetterMovement : MonoBehaviour
 
                 case States.running:
 
-                    isInvincible = false;
                     break;
 
                 case States.dashing:
@@ -148,6 +154,17 @@ public class BetterMovement : MonoBehaviour
             // Run Case
             case States.running:
 
+                if (prevState == States.dashing)
+                {
+                    if (stateDur > 0.3f)
+                    {
+                        Destroy(parryVFX);
+                        isInvincible = false;
+                    }
+
+                    if (parryVFX != null) parryVFX.transform.position = rb.transform.position;
+                }
+
                 speed = Mathf.SmoothDamp(speed, moveSpeed, ref speedVel, .075f);
 
                 // Dash w/Cooldown
@@ -165,7 +182,6 @@ public class BetterMovement : MonoBehaviour
                 if (stateDur > dashDuration)
                 {
                     ChangeState(States.running);
-                    if (parryVFX != null) Destroy(parryVFX);
                 }
 
                 break;

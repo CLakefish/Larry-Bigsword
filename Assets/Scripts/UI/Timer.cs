@@ -1,3 +1,10 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Carson Lakefish
+ * Date: 3 / 23 / 2023
+ * Desc: Speedrun Timer
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;

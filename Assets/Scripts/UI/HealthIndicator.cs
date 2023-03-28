@@ -1,3 +1,9 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Carson Lakefish
+ * Date: 3 / 23 / 2023
+ * Desc: Removed health script
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;

@@ -1,8 +1,9 @@
-/*
- *Nico Sayed 
- *3/15/23
- * This code will be in control of time of death.
- */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Carson Lakefish
+ * Date: 3 / 15 / 2023
+ * Desc: Basic Projectile Timed Death 
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
 
 using System.Collections;
 using System.Collections.Generic;

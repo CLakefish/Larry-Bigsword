@@ -55,7 +55,7 @@ public class DoorHandler : MonoBehaviour
                 }
             }
 
-            gameObject.GetComponent<AudioSource>().Play();
+            AudioHandler.PlaySound("d");
         }
     }
 

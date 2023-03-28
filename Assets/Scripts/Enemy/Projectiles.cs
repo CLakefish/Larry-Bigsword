@@ -1,3 +1,10 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Carson Lakefish & Nico Sayed
+ * Date: 3 / 21 / 2023
+ * Desc: Projectile Collisions Handler
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,6 +63,9 @@ public class Projectiles : MonoBehaviour
                 enemy.knockBack(gameObject, -1, 3f);
                 enemy.isHit = true;
                 enemy.state = BetterEnemy.States.none;
+
+                AudioHandler.PlaySound("eH");
+
                 Destroy(gameObject);
             }
         }
@@ -71,6 +81,8 @@ public class Projectiles : MonoBehaviour
                     {
                         Destroy(player.GetComponent<SwordInput>().parryVFX);
                     }
+
+                    AudioHandler.PlaySound("pP");
 
                     player.GetComponent<HealthPoints>().GainHealth(1);
 
@@ -113,6 +125,7 @@ public class Projectiles : MonoBehaviour
 
                     if (player.parryVFX != null) Destroy(player.parryVFX);
 
+                    AudioHandler.PlaySound("pH");
                     player.isInvincible = false;
 
                     return;
@@ -127,6 +140,8 @@ public class Projectiles : MonoBehaviour
                     hp.TakeDamage(projectileDamage);
 
                     StartCoroutine(IFrame());
+
+                    AudioHandler.PlaySound("pH");
 
                     player.knockBack(gameObject);
                 }
@@ -193,6 +208,8 @@ public class Projectiles : MonoBehaviour
                         Destroy(player.GetComponent<SwordInput>().parryVFX);
                     }
 
+                    AudioHandler.PlaySound("pP");
+
                     player.GetComponent<HealthPoints>().GainHealth(1);
 
                     camera.shakeDuration = .1f;
@@ -216,12 +233,11 @@ public class Projectiles : MonoBehaviour
                             enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                             enemy.knockBack(gameObject, -1, 5);
 
-                            enemy.isHit = true;
                             enemy.state = BetterEnemy.States.none;
-
                         }
-                                                    GameObject firedObj = Instantiate(playerProjectile, transform.position, Quaternion.identity);
-                            firedObj.GetComponent<Rigidbody2D>().velocity = (enemy.transform.position - collision.gameObject.transform.position).normalized * 15f;
+
+                        GameObject firedObj = Instantiate(playerProjectile, transform.position, Quaternion.identity);
+                        firedObj.GetComponent<Rigidbody2D>().velocity = (enemy.transform.position - collision.gameObject.transform.position).normalized * 15f;
                     }
 
                     return;
@@ -235,6 +251,7 @@ public class Projectiles : MonoBehaviour
 
                     if (player.parryVFX != null) Destroy(player.parryVFX);
 
+                    AudioHandler.PlaySound("pH");
                     player.isInvincible = false;
 
                     return;
@@ -249,6 +266,8 @@ public class Projectiles : MonoBehaviour
                     hp.TakeDamage(projectileDamage);
 
                     StartCoroutine(IFrame());
+
+                    AudioHandler.PlaySound("pH");
 
                     player.knockBack(gameObject);
                 }

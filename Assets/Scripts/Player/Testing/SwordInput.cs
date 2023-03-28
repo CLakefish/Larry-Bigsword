@@ -1,3 +1,10 @@
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
+ * Name: Carson Lakefish & Nico Sayed
+ * Date: 3 / 24 / 2023
+ * Desc: Player Sword Input
+ *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +14,13 @@ public class SwordInput : MonoBehaviour
     private Camera cam;
     Vector2 mousePos;
     public GameObject parryVisual;
+    public ParryBar pBar;
     internal GameObject parryVFX;
     internal GameObject sword;
     BetterMovement p;
     Rigidbody2D rb;
     float angle;
+    float parryDur;
     int i = 0;
 
     private float stateDur;
@@ -31,6 +40,8 @@ public class SwordInput : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         cam = FindObjectOfType<Camera>();
         p = gameObject.GetComponent<BetterMovement>();
+
+        pBar = FindObjectOfType<ParryBar>().GetComponent<ParryBar>();
     }
 
     // Update is called once per frame
@@ -73,12 +84,19 @@ public class SwordInput : MonoBehaviour
         }
 
         stateDur += Time.deltaTime;
+        parryDur += Time.deltaTime;
+
+        if (state != States.parrying) pBar.updateParryBar(p.parryCooldown, parryDur);
 
         switch (state)
         {
             case States.none:
                 // Parry w/Cooldown
-                if (parryInput && parryCooldownComplete) ChangeState(States.parrying);
+                if (parryInput && parryDur > p.parryCooldown)
+                {
+                    ChangeState(States.parrying);
+                    parryDur = 0f;
+                }
 
                 // Sword Swing w/Cooldown
                 if (swordInput && p.hasSword && swingCooldownComplete) ChangeState(States.swinging);
@@ -104,9 +122,10 @@ public class SwordInput : MonoBehaviour
                     }
                 }
 
-                if (parryInput && parryCooldownComplete)
+                if (parryInput && parryDur > p.parryCooldown)
                 {
                     if (sword != null) Destroy(sword);
+                    parryDur = 0f;
                     ChangeState(States.parrying);
                 }
 
@@ -128,6 +147,7 @@ public class SwordInput : MonoBehaviour
                     Destroy(parryVFX);
                     p.isParry = false;
                     p.isInvincible = false;
+                    parryDur = 0f;
                     ChangeState(States.none);
                 }
 

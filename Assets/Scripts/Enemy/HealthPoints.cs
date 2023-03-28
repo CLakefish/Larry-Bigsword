@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthPoints : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class HealthPoints : MonoBehaviour
     [Space(3)]
     public bool isPlayer;
     [Space(3)]
+    public HealthBar healthBar;
 
     [Header("Health")]
     [Space(3)]
@@ -24,11 +26,18 @@ public class HealthPoints : MonoBehaviour
     public float deathTime;
     bool invincibility;
 
+    private void Start()
+    {
+        healthBar = GameObject.FindObjectOfType<HealthBar>().GetComponent<HealthBar>();
+    }
+
     private void Update()
     {
         if (isPlayer)
         {
             invincibility = gameObject.GetComponent<BetterMovement>().isInvincible;
+
+            healthBar.updateHealthBar(gameObject.GetComponent<HealthPoints>().maxHP, gameObject.GetComponent<HealthPoints>().currentHP);
         }
     }
 

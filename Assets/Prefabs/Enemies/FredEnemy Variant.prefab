@@ -13,11 +13,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 294622905103727464, guid: 13b9d49e3f092c7488384f3d56255a16, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.756919
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 294622905103727464, guid: 13b9d49e3f092c7488384f3d56255a16, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.756919
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 294622905103727464, guid: 13b9d49e3f092c7488384f3d56255a16, type: 3}
       propertyPath: m_LocalPosition.x
@@ -76,6 +76,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 294622905103727467, guid: 13b9d49e3f092c7488384f3d56255a16, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 294622905103727467, guid: 13b9d49e3f092c7488384f3d56255a16, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.0159581
       objectReference: {fileID: 0}
@@ -113,7 +117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1699609906455905896, guid: 13b9d49e3f092c7488384f3d56255a16, type: 3}
       propertyPath: projectileMaxRandom
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1699609906455905896, guid: 13b9d49e3f092c7488384f3d56255a16, type: 3}
       propertyPath: projectileMinRandom

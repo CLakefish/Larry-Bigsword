@@ -74,11 +74,14 @@ public class BetterEnemy : MonoBehaviour
 
     #endregion
 
+    public Animator anim;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
 
         audioSrc = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -112,22 +115,27 @@ public class BetterEnemy : MonoBehaviour
             {
                 case States.none:
                     rb.velocity = new Vector2(0f, 0f);
+                    Animate(false);
                     break;
 
                 case States.checking:
                     projectileStartTemp = projectileStartTime;
+                    Animate(false);
                     break;
 
                 case States.attacking:
                     rb.velocity = new Vector2(0f, 0f);
+                    Animate(true);
                     break;
 
                 case States.running:
                     projectileStartTemp = projectileStartTime;
+                    Animate(false);
                     break;
 
                 case States.reloading:
                     projectileStartTemp = projectileStartTime;
+                    Animate(false);
                     break;
             }
         }
@@ -333,5 +341,10 @@ public class BetterEnemy : MonoBehaviour
         rb.velocity = new Vector2(0f, 0f);
 
         rb.AddForce(knockback, ForceMode2D.Force);
+    }
+
+    public void Animate(bool state = false)
+    {
+        anim.SetBool("isAttack", state);
     }
 }

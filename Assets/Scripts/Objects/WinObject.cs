@@ -11,19 +11,27 @@ using UnityEngine;
 public class WinObject : MonoBehaviour
 {
     public GameObject menu;
-    GameObject player;
+    public AudioClip winMusic;
+    AudioSource audioSrc;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        audioSrc = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
+            GameObject music = GameObject.FindGameObjectWithTag("Music");
+
             menu.SetActive(true);
+
+            if (music != null)
+            {
+                music.GetComponent<AudioSource>().volume = 0;
+                audioSrc.PlayOneShot(winMusic);
+            }
         }
     }
 }

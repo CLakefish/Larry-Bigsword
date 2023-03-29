@@ -192,8 +192,9 @@ MonoBehaviour:
   projectileMinRandom: 1
   projectileMaxRandom: 4
   projectileDamage: 2
-  enemyShoot: {fileID: 0}
+  enemyShoot: {fileID: 8300000, guid: f2f8f27f141a80a4f831b3c16437fb91, type: 3}
   stateDur: 0
+  anim: {fileID: 0}
 --- !u!82 &6715611594389478404
 AudioSource:
   m_ObjectHideFlags: 0

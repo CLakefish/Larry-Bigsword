@@ -133,10 +133,6 @@ PrefabInstance:
       value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
-      propertyPath: enemyShoot
-      value: 
-      objectReference: {fileID: 8300000, guid: ef9f8a64dc716864c877b4a9a7c80549, type: 3}
-    - target: {fileID: 8066750334315712315, guid: 4bd041e477a64ef488772330d4c57ee3, type: 3}
       propertyPath: knockbackForce
       value: 100
       objectReference: {fileID: 0}

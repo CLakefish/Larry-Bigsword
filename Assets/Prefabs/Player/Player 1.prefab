@@ -168,6 +168,7 @@ MonoBehaviour:
   isInvincible: 0
   parryVisual: {fileID: 225217279210172575, guid: 1073502a715182c44abc590107e94aed, type: 3}
   dashParticle: {fileID: 8791935059552515009, guid: 12dc3d0a15c972c4d83903ff80c06e97, type: 3}
+  dashSound: {fileID: 8300000, guid: 8cdaa96c7c75bf64583e88b2d29333d0, type: 3}
   anim: {fileID: 8106241821564897090}
 --- !u!114 &6164685039624620865
 MonoBehaviour:

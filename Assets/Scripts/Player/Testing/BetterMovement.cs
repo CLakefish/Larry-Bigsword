@@ -67,6 +67,8 @@ public class BetterMovement : MonoBehaviour
 
     internal States state, prevState;
 
+    AudioSource audioSrc;
+    public AudioClip dashSound;
     public Animator anim;
 
     private void Awake()
@@ -77,6 +79,7 @@ public class BetterMovement : MonoBehaviour
     private void Start()
     {
         state = States.running;
+        audioSrc = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -129,6 +132,7 @@ public class BetterMovement : MonoBehaviour
 
                 case States.dashing:
 
+                    audioSrc.PlayOneShot(dashSound, 20f);
                     isInvincible = true;
                     dashVFX = Instantiate(dashParticle, rb.transform.position, Quaternion.identity);
                     parryVFX = Instantiate(parryVisual, rb.position, Quaternion.identity);
